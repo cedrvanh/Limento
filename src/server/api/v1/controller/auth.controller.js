@@ -11,7 +11,7 @@ class AuthController {
         authService.passport.authenticate('local', config.jwtSession, (err, user, info) => {
             if (err) { return next(err); }
             if (!user) {
-                return next(new Error("kkjkj"));
+                return next(new Error("No user found."));
             }
             req.auth = {
                 id: user.id,

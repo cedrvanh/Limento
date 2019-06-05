@@ -13,7 +13,7 @@ Import the internal libraries:
 - User
 */
 import { logger } from '../../../utilities';
-import { Blog, Category, Post, User } from './schemas';
+import { Blog, Category, Post, User, Tag } from './schemas';
 
 class Seeder {
     constructor() {
@@ -21,6 +21,7 @@ class Seeder {
         this.categories = [];
         this.posts = [];
         this.users = [];
+        this.tags = [];
     }
 
     blogCreate = async (title, description) => {
@@ -79,9 +80,14 @@ class Seeder {
         }
     }
 
-    userCreate = async (email, password) => {
+    userCreate = async (name, email, city, street, password) => {
         const userDetail = {
+            name,
             email,
+            address: {
+                city,
+                street
+            },
             localProvider: {
                 password,
             },
@@ -90,11 +96,29 @@ class Seeder {
 
         try {
             const newUser = await user.save();
-            this.posts.push(newUser);
+            this.users.push(newUser);
 
             logger.log({ level: 'info', message: `User created with id: ${newUser.id}!` });
         } catch (err) {
             logger.log({ level: 'info', message: `An error occurred when creating a user: ${err}!` });
+        }
+    }
+
+    tagCreate = async (name, description) => {
+        const tagDetail = {
+            name,
+            description,
+        };
+        const tag = new Tag(tagDetail);
+
+        try {
+            const newTag = await tag.save();
+
+            this.tags.push(newTag);
+
+            logger.log({ level: 'info', message: `Tag created with id: ${newTag.id}!` });
+        } catch (err) {
+            logger.log({ level: 'info', message: `An error occurred when creating a tag: ${err}!` });
         }
     }
 
@@ -127,13 +151,22 @@ class Seeder {
 
     createUsers = async () => {
         await Promise.all([
-            (async () => this.userCreate(faker.internet.email(), 'wicked4u'))(),
-            (async () => this.userCreate(faker.internet.email(), 'wicked4u'))(),
-            (async () => this.userCreate(faker.internet.email(), 'wicked4u'))(),
-            (async () => this.userCreate(faker.internet.email(), 'wicked4u'))(),
-            (async () => this.userCreate(faker.internet.email(), 'wicked4u'))(),
-            (async () => this.userCreate(faker.internet.email(), 'wicked4u'))(),
-            (async () => this.userCreate(faker.internet.email(), 'wicked4u'))(),
+            (async () => this.userCreate(faker.name.firstName(), faker.internet.email(), faker.address.city(), faker.address.streetAddress(), 'wicked4u'))(),
+            (async () => this.userCreate(faker.name.firstName(), faker.internet.email(), faker.address.city(), faker.address.streetAddress(), 'wicked4u'))(),
+            (async () => this.userCreate(faker.name.firstName(), faker.internet.email(), faker.address.city(), faker.address.streetAddress(), 'wicked4u'))(),
+            (async () => this.userCreate(faker.name.firstName(), faker.internet.email(), faker.address.city(), faker.address.streetAddress(), 'wicked4u'))(),
+            (async () => this.userCreate(faker.name.firstName(), faker.internet.email(), faker.address.city(), faker.address.streetAddress(), 'wicked4u'))(),
+            (async () => this.userCreate(faker.name.firstName(), faker.internet.email(), faker.address.city(), faker.address.streetAddress(), 'wicked4u'))(),
+            (async () => this.userCreate('John Doe', 'test@example.com', faker.address.city(), faker.address.streetAddress(), 'secret'))(),
+        ]);
+    }
+
+    createTags = async () => {
+        await Promise.all([
+            (async () => this.tagCreate(faker.lorem.word(), faker.lorem.sentence()))(),
+            (async () => this.tagCreate(faker.lorem.word(), faker.lorem.sentence()))(),
+            (async () => this.tagCreate(faker.lorem.word(), faker.lorem.sentence()))(),
+            (async () => this.tagCreate(faker.lorem.word(), faker.lorem.sentence()))(),
         ]);
     }
 
@@ -184,6 +217,13 @@ class Seeder {
                 await this.createUsers();
             }
             return User.find().exec();
+        });
+
+        this.tags = await Tag.estimatedDocumentCount().exec().then(async (count) => {
+            if (count === 0) {
+                await this.createTags();
+            }
+            return Tag.find().exec();
         });
     }
 }
