@@ -20,7 +20,7 @@ Page components
 */
 import HomePage from './pages/home';
 import AdminPage from './admin/pages/admin';
-import LoginPage from './pages/login';
+import { LoginPage } from './pages/auth';
 import NewsPage from './pages/news';
 import PostDetailPage from './pages/post-detail';
 
