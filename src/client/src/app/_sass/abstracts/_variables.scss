@@ -1,2 +1,28 @@
 $font-family-lato: 'Lato', sans-serif;
 $font-family-roboto: 'Roboto', sans-serif;
+
+// Color variables
+$color-primary: #FF5555;
+$color-secondary: #01CBE2;
+$color-background: #E5F8FF;
+
+$color-heading: #303030;
+$color-text: #4B4B4B;
+
+$color-variant-amount: 15%;
+
+$colors: (
+    heading: $color-heading,
+    text: $color-text,
+    background: $color-background,
+    primary: (
+        base: $color-primary,
+        light: lighten($color-primary, $color-variant-amount),
+        dark: darken($color-primary, $color-variant-amount),
+    ),
+    secondary: (
+        base: $color-secondary,
+        light: lighten($color-secondary, $color-variant-amount),
+        dark: darken($color-secondary, $color-variant-amount),
+    ),
+)

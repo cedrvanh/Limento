@@ -23,6 +23,7 @@ import AdminPage from './admin/pages/admin';
 import { LoginPage } from './pages/auth';
 import NewsPage from './pages/news';
 import PostDetailPage from './pages/post-detail';
+import ProfilePage from './pages/profile/ProfilePage';
 
 /*
 Import styling
@@ -38,6 +39,7 @@ class Main extends Component {
           <Redirect from="/home" to="/"/>
           <RouteWithLayout exact path='/news' layout={ PageLayout } component={ NewsPage }/>
           <RouteWithLayout exact path='/news/:id' layout={ PageLayout } component={ PostDetailPage }/>
+          <RouteWithLayout exact path='/profile' layout={ PageLayout } component={ ProfilePage }/>
           <RouteWithLayout path="/login" layout={ LoginLayout } component={ LoginPage }></RouteWithLayout>
           <RouteWithLayout path="/admin" layout={ AdminLayout } component={ AdminPage }></RouteWithLayout>
         </Switch>
