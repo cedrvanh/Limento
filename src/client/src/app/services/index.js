@@ -1,2 +1,7 @@
 import Api from './Api';
-export default Api;
+import Auth from './Auth';
+
+export {
+    Api,
+    Auth
+}

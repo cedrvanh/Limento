@@ -8,6 +8,7 @@ import classNames from 'classnames';
 Styling
 */
 import './PostsList.scss'
+import PostCard from '../post-card';
 
 class PostsLists extends Component {
     readMoreHandler = (ev, id) => {
@@ -22,11 +23,12 @@ class PostsLists extends Component {
         return (
             <React.Fragment>
                 {posts && posts.map( (post, index) => (
-                    <article key={ post.id } className={classNames("post--small")}>
-                        <h1 className="post__title">{ post.title }</h1>
-                        <div className="post__synopsis">{ post.synopsis }</div>
-                        <button onClick={(ev) => this.readMoreHandler(ev, post.id)}>More</button>
-                    </article>
+                    <PostCard singlePost={ post }/>
+                    // <article key={ post.id } className={classNames("post--small")}>
+                    //     <h1 className="post__title">{ post.title }</h1>
+                    //     <div className="post__synopsis">{ post.synopsis }</div>
+                    //     <button onClick={(ev) => this.readMoreHandler(ev, post.id)}>More</button>
+                    // </article>
                 ))}
             </React.Fragment>
         );

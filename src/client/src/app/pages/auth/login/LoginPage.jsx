@@ -20,11 +20,11 @@ import withStyles from '@material-ui/core/styles/withStyles';
 Material UI
 */
 import Grid from '@material-ui/core/Grid';
-import Title from '../../../components/base/title/Title';
 
 /*
 Components
 */
+import Title from '../../../components/base/title';
 
 /*
 Styling
@@ -62,6 +62,27 @@ const styles = theme => ({
 });
 
 class LoginPage extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      email: "",
+      password: ""
+    };
+  }
+
+  handleChange = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value
+    });
+  }
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(this.state.email);
+    console.log(this.state.password);
+  }
+
   render() {
     const { classes } = this.props;
     
@@ -71,22 +92,23 @@ class LoginPage extends Component {
         <form className={classes.form}>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="email">Email Address</InputLabel>
-            <Input id="email" name="email" autoComplete="email" autoFocus />
+            <Input id="email" name="email" value={this.state.email} onChange={this.handleChange} autoComplete="email" autoFocus />
           </FormControl>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="password">Password</InputLabel>
-            <Input name="password" type="password" id="password" autoComplete="current-password" />
+            <Input name="password" type="password" id="password" value={this.state.password} onChange={this.handleChange} autoComplete="current-password" />
           </FormControl>
-          <FormControlLabel
+          {/* <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
-          />
+          /> */}
           <Button
             type="submit"
             fullWidth
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={this.handleSubmit}
           >
             Sign in
           </Button>

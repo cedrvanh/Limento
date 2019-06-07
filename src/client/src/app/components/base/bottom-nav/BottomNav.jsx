@@ -4,12 +4,15 @@ import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
-import RestoreIcon from '@material-ui/icons/Restore';
+import HomeIcon from '@material-ui/icons/Home';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import InfoIcon from '@material-ui/icons/InfoRounded';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+
+// Color variables
+const ICON_COLOR    = '#FF5555';
 
 const styles = theme => ({
     sticky: {
@@ -29,7 +32,16 @@ const styles = theme => ({
       left: 0,
       right: 0,
       margin: '0 auto',
+      backgroundColor: ICON_COLOR,
     },
+
+    root: {
+      color: '#BBB',
+      '&$selected': { 
+        color: '#BBB', 
+      }, 
+    },
+    selected: {}
 });
 
 function BottomNav(props) {
@@ -44,13 +56,37 @@ function BottomNav(props) {
         }}
         className={[classes.sticky, classes.bottomNav]}
       >
-        <BottomNavigationAction component={Link} to="/home" label="Recents" icon={<RestoreIcon />} />
-        <BottomNavigationAction component={Link} to="/news" label="Favorites" icon={<FavoriteIcon />} />
-        <Fab component={Link} to="/create" color="secondary" aria-label="Add" className={classes.fabButton}>
+        <BottomNavigationAction 
+          className={[classes.root, classes.selected]}
+          component={Link} 
+          to="/" 
+          label="Home" 
+          icon={<HomeIcon />} 
+        />
+        <BottomNavigationAction 
+          className={[classes.root, classes.selected]}
+          component={Link} 
+          to="/feed" 
+          label="Favorites" 
+          icon={<FavoriteIcon />} 
+        />
+        <Fab component={Link} to="/feed/create" color="secondary" aria-label="Add" className={classes.fabButton}>
           <AddIcon />
         </Fab>
-        <BottomNavigationAction component={Link} to="/about" label="About" icon={<InfoIcon />} />
-        <BottomNavigationAction component={Link} to="/chat" label="Messages" icon={<ChatBubbleIcon />} />
+        <BottomNavigationAction 
+          className={[classes.root, classes.selected]}
+          component={Link} 
+          to="/chat" 
+          label="Messages" 
+          icon={<ChatBubbleIcon />} 
+        />
+        <BottomNavigationAction 
+          className={[classes.root, classes.selected]}
+          component={Link} 
+          to="/about" 
+          label="About" 
+          icon={<InfoIcon />} 
+        />
       </BottomNavigation>
     );
 }

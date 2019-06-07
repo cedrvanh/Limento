@@ -1,0 +1,9 @@
+@import '../../../_sass/abstracts/variables';
+@import '_sass/abstracts/variables';
+@import '_sass/abstracts/functions';
+
+.header {
+    width: 100%;
+    height: 50px;
+    background-color: color(primary, base);
+}

@@ -25,4 +25,9 @@ $colors: (
         light: lighten($color-secondary, $color-variant-amount),
         dark: darken($color-secondary, $color-variant-amount),
     ),
-)
+);
+
+
+// Grid variables
+$padding: 16px;
+$container-spacing: $padding;
