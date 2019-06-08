@@ -19,11 +19,9 @@ Constants
 const { Schema } = mongoose;
 
 const UserSchema = new Schema(
-    {
-        name: {
-            type: String,
-            required: true,
-        },
+    {  
+        avatar: { type: String, required: false },
+        name: { type: String, required: true,},
         email: {
             type: String,
             required: true,
@@ -31,6 +29,8 @@ const UserSchema = new Schema(
             unique: true,
             match: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
         },
+        dateOfBirth: { type: Date, required: false },
+        synopsis: { type: String, required: false },
         address: {
             city: {
                 type: String,
@@ -45,6 +45,7 @@ const UserSchema = new Schema(
             password: {
                 type: String,
                 required: false,
+                select: false
             },
         },
         facebookProvider: {

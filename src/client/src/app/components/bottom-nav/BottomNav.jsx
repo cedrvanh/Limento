@@ -1,4 +1,6 @@
 import React from 'react';
+import classNames from 'classnames';
+
 import { Link } from 'react-router-dom';
 
 import { withStyles } from '@material-ui/core/styles';
@@ -8,6 +10,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import InfoIcon from '@material-ui/icons/InfoRounded';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
+import ProfileIcon from '@material-ui/icons/Person';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
@@ -16,15 +19,15 @@ const ICON_COLOR    = '#FF5555';
 
 const styles = theme => ({
     sticky: {
-        width: '100%',
-        position: 'fixed',
-        bottom: 0,
+      width: '100%',
+      position: 'fixed',
+      bottom: 0,
     },
-    
+
     bottomNav: {
         boxShadow: '0px 1px 5px #DEDEDE'
     },
-    
+
     fabButton: {
       position: 'absolute',
       zIndex: 1,
@@ -44,6 +47,9 @@ const styles = theme => ({
     selected: {}
 });
 
+const actionClass = classNames({
+  
+});
 function BottomNav(props) {
     const { classes } = props;
     const [value, setValue] = React.useState(0);
@@ -66,9 +72,9 @@ function BottomNav(props) {
         <BottomNavigationAction 
           className={[classes.root, classes.selected]}
           component={Link} 
-          to="/feed" 
-          label="Favorites" 
-          icon={<FavoriteIcon />} 
+          to="/profile" 
+          label="Profile" 
+          icon={<ProfileIcon />} 
         />
         <Fab component={Link} to="/feed/create" color="secondary" aria-label="Add" className={classes.fabButton}>
           <AddIcon />

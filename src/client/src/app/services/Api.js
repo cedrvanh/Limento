@@ -15,6 +15,11 @@ class Api {
         return await response.json();
     }
 
+    static findOneUser = async (id) => {
+        const response = await fetch(`${this.URL}/users/${id}`);
+        return await response.json();
+    }
+
     static queryParams = (params) => {
         return Object.keys(params)
             .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))

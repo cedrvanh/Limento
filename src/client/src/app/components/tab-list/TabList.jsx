@@ -29,7 +29,7 @@ function TabList(props) {
     }
 
     return (
-        <Tabs className={[classes.root, classes.indicator]} value={value} indicatorColor="primary" onChange={handleChange} centered>
+        <Tabs className={classNames(classes.root, classes.indicator)} value={value} indicatorColor="primary" onChange={handleChange} centered>
             <TabItem label={'Offers'} />
             <TabItem label={'Requests'} />
         </Tabs>

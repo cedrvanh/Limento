@@ -24,7 +24,7 @@ const PostTypeSchema = new Schema(
 );
 
 PostTypeSchema.methods.slugify = function () {
-    this.slug = slug(this.title);
+    this.slug = slug(this.name);
 };
 
 PostTypeSchema.pre('validate', function (next) {

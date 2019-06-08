@@ -23,7 +23,7 @@ class PostsLists extends Component {
         return (
             <React.Fragment>
                 {posts && posts.map( (post, index) => (
-                    <PostCard singlePost={ post }/>
+                    <PostCard key={ post.id } post={ post }/>
                     // <article key={ post.id } className={classNames("post--small")}>
                     //     <h1 className="post__title">{ post.title }</h1>
                     //     <div className="post__synopsis">{ post.synopsis }</div>

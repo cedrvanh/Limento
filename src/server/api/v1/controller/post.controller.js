@@ -21,12 +21,12 @@ class PostController {
                 const options = {
                     page: parseInt(skip, 10) || 1,
                     limit: parseInt(limit, 10) || 10,
-                    populate: 'category',
+                    populate:  ['category', 'user'],
                     sort: { created_at: -1 },
                 };
                 posts = await Post.paginate({}, options);
             } else {
-                posts = await Post.find().populate('category').sort({ created_at: -1 }).exec();
+                posts = await Post.find().populate('category').populate('user', 'avatar name').sort({ created_at: -1 }).exec();
             }
 
             if (posts === undefined || posts === null) {
@@ -42,7 +42,7 @@ class PostController {
     show = async (req, res, next) => {
         try {
             const { id } = req.params;
-            const item = await Post.findById(id).populate('category').exec();
+            const item = await Post.findById(id).populate('category').populate('user').exec();
             if (item === undefined || item === null) {
                 throw new APIError(404, `Post with id: ${id} not found!`);
             }

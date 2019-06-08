@@ -33,6 +33,7 @@ import NotFoundPage from './pages/404';
 Import styling
 */
 import './Main.css';
+import './_sass/main.scss';
 
 class Main extends Component {
   render() {

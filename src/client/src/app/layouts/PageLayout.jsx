@@ -8,12 +8,16 @@ import './Page.scss';
 
 import Grid from '@material-ui/core/Grid';
 
-import TopNav from '../components/base/top-nav';
-import AppHeader from '../components/base/header';
-import BottomNav from '../components/base/bottom-nav';
+import TopNav from '../components/top-nav';
+import BottomNav from '../components/bottom-nav';
 import TabList from '../components/tab-list';
 
 class PageLayout extends React.Component {
+
+    isPath = (path) => {
+        return this.props.location.pathname == path;
+    }
+
     render() {
         const { children, classes } = this.props;
 
@@ -21,8 +25,9 @@ class PageLayout extends React.Component {
             <div className="page">
                 <header role="header">
                     <TopNav />
-                    <TabList />
-                    {/* <AppHeader /> */}
+                    {
+                        this.isPath('/') ? <TabList /> : null
+                    }
                 </header>
                 <main className="main" role="main">
                     <div className="container">

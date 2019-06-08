@@ -2,13 +2,7 @@
 Import external libraries
 */
 import React, { Component } from 'react';
-
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
+import classNames from 'classnames';
 
 import Title from '../base/title';
 
@@ -25,30 +19,10 @@ class PostCard extends Component {
 
         return (
             <React.Fragment>
-                {/* <Card>
-                    <CardActionArea>
-                        <CardContent>
-                            <Title type={2}>
-                                fdgdfgdfg
-                            </Title>
-                            <p>
-                                { post ? 'True' : 'False' }
-                            </p>
-                        </CardContent>
-                    </CardActionArea>
-                    <CardActions>
-                        <Button size="small" color="primary">
-                        Share
-                        </Button>
-                        <Button size="small" color="primary">
-                        Learn More
-                        </Button>
-                    </CardActions>
-                </Card> */}
-                <article class="card">
-                    <img class="card__thumbnail" src={IMAGE_PATH}/>
-                    <section class="card__content">
-                        <Title type={2} style={{ margin: '8px 0' }}>Verse groenten</Title>
+                <article className="card">
+                    <img className="card__thumbnail" src={IMAGE_PATH} />
+                    <section className="card__content">
+                        <Title type={4} style={{ margin: '8px 0' }}>{ post.title }</Title>
                     </section>
                 </article>
             </React.Fragment>

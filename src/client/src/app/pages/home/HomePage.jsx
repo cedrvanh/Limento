@@ -13,10 +13,12 @@ import { Api } from '../../services';
 import PostsList from '../../components/posts-list';
 import PostCard from '../../components/post-card';
 import TabList from '../../components/tab-list';
+import Spinner from '../../components/base/spinner';
 
 class HomePage extends Component {
     state = {
           posts: [],
+          isLoading: true,
     };
 
     componentWillMount() {
@@ -28,7 +30,8 @@ class HomePage extends Component {
             .then((data) => {
                 this.setState(prevState => ({
                     ...prevState,
-                    posts: data
+                    posts: data,
+                    isLoading: false
                 }));
             })
             .catch((error) => {
@@ -41,18 +44,14 @@ class HomePage extends Component {
     }
 
     render() {
-        const { posts } = this.state;
+        const { posts, isLoading } = this.state;
 
         return (
             <React.Fragment>
-                <section>
-                    <header>
-                        <h2>Feed</h2>
-                    </header>
-                    <PostCard />
-                    {/* <div className="section__content section__content--articles">
-                        <PostsList posts={posts} onReadMore={this.goToPostDetailPage} />
-                    </div> */}
+                <section className="section__content section__content--articles">
+                    {
+                        isLoading ? <Spinner /> : <PostsList posts={posts} onReadMore={this.goToPostDetailPage} />
+                    } 
                 </section>
             </React.Fragment>
         )

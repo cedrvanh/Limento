@@ -13,7 +13,7 @@ Import the internal libraries:
 - User
 */
 import { logger } from '../../../utilities';
-import { Blog, Category, Post, User, Tag } from './schemas';
+import { Blog, Category, Post, User, Tag, PostType } from './schemas';
 
 class Seeder {
     constructor() {
@@ -22,6 +22,7 @@ class Seeder {
         this.posts = [];
         this.users = [];
         this.tags = [];
+        this.postTypes = [];
     }
 
     blogCreate = async (title, description) => {
@@ -66,6 +67,7 @@ class Seeder {
             title,
             synopsis,
             body,
+            userId: this.getRandomUser(),
             categoryId: this.getRandomCategory(),
         };
         const post = new Post(postDetail);
@@ -80,8 +82,26 @@ class Seeder {
         }
     }
 
-    userCreate = async (name, email, city, street, password) => {
+    postTypeCreate = async (name, description) => {
+        const postTypeDetail = {
+            name,
+            description
+        };
+        const postType = new PostType(postTypeDetail);
+
+        try {
+            const newPostType = await postType.save();
+            this.postTypes.push(newPostType);
+
+            logger.log({ level: 'info', message: `Post type created with id: ${newPostType.id}!` });
+        } catch (err) {
+            logger.log({ level: 'info', message: `An error occurred when creating a post type: ${err}!` });
+        }
+    }
+
+    userCreate = async (avatar, name, email, city, street, password) => {
         const userDetail = {
+            avatar,
             name,
             email,
             address: {
@@ -90,7 +110,7 @@ class Seeder {
             },
             localProvider: {
                 password,
-            },
+            }
         };
         const user = new User(userDetail);
 
@@ -137,9 +157,18 @@ class Seeder {
         ]);
     }
 
+    createUsers = async () => {
+        await Promise.all([
+            (async () => this.userCreate('https://randomuser.me/api/portraits/men/67.jpg', faker.name.firstName() + ' ' + faker.name.lastName(), faker.internet.email(), faker.address.city(), faker.address.streetAddress(), 'wicked4u'))(),
+            (async () => this.userCreate('https://randomuser.me/api/portraits/women/67.jpg', faker.name.firstName() + ' ' + faker.name.lastName(), faker.internet.email(), faker.address.city(), faker.address.streetAddress(), 'wicked4u'))(),
+            (async () => this.userCreate('https://randomuser.me/api/portraits/men/50.jpg', faker.name.firstName() + ' ' + faker.name.lastName(), faker.internet.email(), faker.address.city(), faker.address.streetAddress(), 'wicked4u'))(),
+            (async () => this.userCreate('https://randomuser.me/api/portraits/men/27.jpg', faker.name.firstName() + ' ' + faker.name.lastName(), faker.internet.email(), faker.address.city(), faker.address.streetAddress(), 'wicked4u'))(),
+            (async () => this.userCreate('https://randomuser.me/api/portraits/men/34.jpg', 'John Doe', 'test@example.com', faker.address.city(), faker.address.streetAddress(), 'secret'))(),
+        ]);
+    }
+
     createPosts = async () => {
         await Promise.all([
-            (async () => this.postCreate(faker.lorem.sentence(), faker.lorem.paragraph(), `<p>${faker.lorem.paragraphs(10, '</p></p>')}</p>`))(),
             (async () => this.postCreate(faker.lorem.sentence(), faker.lorem.paragraph(), `<p>${faker.lorem.paragraphs(10, '</p></p>')}</p>`))(),
             (async () => this.postCreate(faker.lorem.sentence(), faker.lorem.paragraph(), `<p>${faker.lorem.paragraphs(10, '</p></p>')}</p>`))(),
             (async () => this.postCreate(faker.lorem.sentence(), faker.lorem.paragraph(), `<p>${faker.lorem.paragraphs(10, '</p></p>')}</p>`))(),
@@ -149,15 +178,10 @@ class Seeder {
         ]);
     }
 
-    createUsers = async () => {
+    createPostTypes = async () => {
         await Promise.all([
-            (async () => this.userCreate(faker.name.firstName(), faker.internet.email(), faker.address.city(), faker.address.streetAddress(), 'wicked4u'))(),
-            (async () => this.userCreate(faker.name.firstName(), faker.internet.email(), faker.address.city(), faker.address.streetAddress(), 'wicked4u'))(),
-            (async () => this.userCreate(faker.name.firstName(), faker.internet.email(), faker.address.city(), faker.address.streetAddress(), 'wicked4u'))(),
-            (async () => this.userCreate(faker.name.firstName(), faker.internet.email(), faker.address.city(), faker.address.streetAddress(), 'wicked4u'))(),
-            (async () => this.userCreate(faker.name.firstName(), faker.internet.email(), faker.address.city(), faker.address.streetAddress(), 'wicked4u'))(),
-            (async () => this.userCreate(faker.name.firstName(), faker.internet.email(), faker.address.city(), faker.address.streetAddress(), 'wicked4u'))(),
-            (async () => this.userCreate('John Doe', 'test@example.com', faker.address.city(), faker.address.streetAddress(), 'secret'))(),
+            (async () => this.postTypeCreate('Offer', 'Post for people offering food'))(),
+            (async () => this.postTypeCreate('Request', 'Post for people that are looking for something to eat'))(),
         ]);
     }
 
@@ -178,6 +202,14 @@ class Seeder {
         return category;
     }
 
+    getRandomUser = () => {
+        let user = null;
+        if (this.users && this.users.length > 0) {
+            user = this.users[Math.round(Math.random() * (this.users.length - 1))];
+        }
+        return user;
+    }
+    
     getRandomPosts = () => {
         let cPosts = null;
         if (this.posts && this.posts.length > 0) {
@@ -198,6 +230,13 @@ class Seeder {
             return Category.find().exec();
         });
 
+        this.users = await User.estimatedDocumentCount().exec().then(async (count) => {
+            if (count === 0) {
+                await this.createUsers();
+            }
+            return User.find().exec();
+        });
+
         this.posts = await Post.estimatedDocumentCount().exec().then(async (count) => {
             if (count === 0) {
                 await this.createPosts();
@@ -205,18 +244,18 @@ class Seeder {
             return Post.find().exec();
         });
 
+        this.postTypes = await PostType.estimatedDocumentCount().exec().then(async (count) => {
+            if (count === 0) {
+                await this.createPostTypes();
+            }
+            return PostType.find().exec();
+        });
+
         this.blogs = await Blog.estimatedDocumentCount().exec().then(async (count) => {
             if (count === 0) {
                 await this.createBlogs();
             }
             return Blog.find().exec();
-        });
-
-        this.users = await User.estimatedDocumentCount().exec().then(async (count) => {
-            if (count === 0) {
-                await this.createUsers();
-            }
-            return User.find().exec();
         });
 
         this.tags = await Tag.estimatedDocumentCount().exec().then(async (count) => {
