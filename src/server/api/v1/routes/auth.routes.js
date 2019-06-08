@@ -9,6 +9,7 @@ const authController = new AuthController();
 
 const initializeEndpoints = (parentRouter, authService) => {
     parentRouter.post('/login/local', (req, res, next) => authController.loginLocal(authService, req, res, next));
+    parentRouter.post('/register', (req, res, next) => authController.register(req, res, next));
 };
 
 export default initializeEndpoints;

@@ -16,23 +16,33 @@ import TabList from '../../components/tab-list';
 import Spinner from '../../components/base/spinner';
 
 class HomePage extends Component {
+    _isMounted = false;
+    
     state = {
           posts: [],
           isLoading: true,
     };
 
     componentWillMount() {
+        this._isMounted = true;
+
         this.loadPosts();
+    }
+
+    componentWillUnmount() {
+        this._isMounted = false;
     }
 
     loadPosts = () => {
         Api.findAllPosts()
             .then((data) => {
-                this.setState(prevState => ({
-                    ...prevState,
-                    posts: data,
-                    isLoading: false
-                }));
+                if (this._isMounted) {
+                    this.setState(prevState => ({
+                        ...prevState,
+                        posts: data,
+                        isLoading: false
+                    }));
+                }
             })
             .catch((error) => {
                 console.log(error);

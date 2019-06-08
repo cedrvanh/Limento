@@ -2,6 +2,7 @@
 Import extenal libraries
 */
 import React, { Component } from 'react';
+import axios from 'axios';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -26,6 +27,9 @@ Components
 */
 import Title from '../../../components/base/title';
 
+import { Auth } from '../../../services';
+import { setAuthToken } from '../../../utilities';
+ 
 /*
 Styling
 */
@@ -79,8 +83,20 @@ class LoginPage extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state.email);
-    console.log(this.state.password);
+    this.onLogin();
+  }
+
+  onLogin = () => {
+    const user = {
+      email: this.state.email,
+      password: this.state.password
+    }
+
+    Auth.login(user) 
+      .then(res => {
+        Auth.setToken(res.token);
+        this.props.history.push('/');
+      });
   }
 
   render() {

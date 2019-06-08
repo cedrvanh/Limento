@@ -5,6 +5,7 @@ Import the internal libraries:
 */
 import { APIError, handleAPIError, createToken } from '../../../utilities';
 import config from '../../../config';
+import { User } from '../database';
 
 class AuthController {
     loginLocal = async (authService, req, res, next) => {
@@ -24,6 +25,25 @@ class AuthController {
             });
         })(req, res, next);
     };
+
+    register = async (req, res, next) => {
+        const { name, email, password } = req.body;
+        
+        const findUser = await User.findOne({ "email": email });
+        if (findUser) {
+            return next(new Error("Email already in use"))
+        };
+
+        const newUser = new User({
+            name,
+            email,
+            localProvider: {
+                password
+            }
+        });
+
+        await newUser.save();
+    }
 }
 
 export default AuthController;

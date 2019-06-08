@@ -20,7 +20,7 @@ Page components
 */
 import HomePage from './pages/home';
 import AdminPage from './admin/pages/admin';
-import { LoginPage } from './pages/auth';
+import { LoginPage, LogOutPage, RegisterPage } from './pages/auth';
 import NewsPage from './pages/news';
 import PostDetailPage from './pages/post-detail';
 import ProfilePage from './pages/profile';
@@ -49,6 +49,7 @@ class Main extends Component {
           <RouteWithLayout path='/chat' layout={ PageLayout } component={ ChatPage }/>
           <RouteWithLayout path='/about' layout={ PageLayout } component={ AboutPage }/>
           <RouteWithLayout path="/login" layout={ LoginLayout } component={ LoginPage }></RouteWithLayout>
+          <RouteWithLayout path="/logout" layout={ LoginLayout } component={ LogOutPage }></RouteWithLayout>
           <RouteWithLayout path="/admin" layout={ AdminLayout } component={ AdminPage }></RouteWithLayout>
           <RouteWithLayout layout={ PageLayout } component={ NotFoundPage }></RouteWithLayout>
         </Switch>
