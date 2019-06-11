@@ -11,11 +11,6 @@ const CommentSchema = new Schema(
             ref: 'User', 
             required: true 
         },
-        post: { 
-            type: Schema.Types.ObjectId, 
-            ref: 'Post', 
-            required: true 
-        },
         published_at: { type: Date, required: false },
         deleted_at: { type: Date, required: false },
     },

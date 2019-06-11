@@ -62,26 +62,6 @@ class Seeder {
         }
     }
 
-    postCreate = async (title, synopsis, body) => {
-        const postDetail = {
-            title,
-            synopsis,
-            body,
-            userId: this.getRandomUser(),
-            categoryId: this.getRandomCategory(),
-        };
-        const post = new Post(postDetail);
-
-        try {
-            const newPost = await post.save();
-            this.posts.push(newPost);
-
-            logger.log({ level: 'info', message: `Post created with id: ${newPost.id}!` });
-        } catch (err) {
-            logger.log({ level: 'info', message: `An error occurred when creating a post: ${err}!` });
-        }
-    }
-
     postTypeCreate = async (name, description) => {
         const postTypeDetail = {
             name,
@@ -96,6 +76,27 @@ class Seeder {
             logger.log({ level: 'info', message: `Post type created with id: ${newPostType.id}!` });
         } catch (err) {
             logger.log({ level: 'info', message: `An error occurred when creating a post type: ${err}!` });
+        }
+    }
+
+    postCreate = async (title, synopsis, body) => {
+        const postDetail = {
+            title,
+            synopsis,
+            body,
+            userId: this.getRandomUser(),
+            typeId: this.getRandomPostType(),
+            categoryId: this.getRandomCategory(),
+        };
+        const post = new Post(postDetail);
+
+        try {
+            const newPost = await post.save();
+            this.posts.push(newPost);
+
+            logger.log({ level: 'info', message: `Post created with id: ${newPost.id}!` });
+        } catch (err) {
+            logger.log({ level: 'info', message: `An error occurred when creating a post: ${err}!` });
         }
     }
 
@@ -210,6 +211,14 @@ class Seeder {
         return user;
     }
     
+    getRandomPostType = () => {
+        let postType = null;
+        if (this.postTypes && this.postTypes.length > 0) {
+            postType = this.postTypes[Math.round(Math.random() * (this.postTypes.length - 1))];
+        }
+        return postType;
+    }
+
     getRandomPosts = () => {
         let cPosts = null;
         if (this.posts && this.posts.length > 0) {
@@ -235,6 +244,13 @@ class Seeder {
                 await this.createUsers();
             }
             return User.find().exec();
+        });  
+
+        this.postTypes = await PostType.estimatedDocumentCount().exec().then(async (count) => {
+            if (count === 0) {
+                await this.createPostTypes();
+            }
+            return PostType.find().exec();
         });
 
         this.posts = await Post.estimatedDocumentCount().exec().then(async (count) => {
@@ -242,13 +258,6 @@ class Seeder {
                 await this.createPosts();
             }
             return Post.find().exec();
-        });
-
-        this.postTypes = await PostType.estimatedDocumentCount().exec().then(async (count) => {
-            if (count === 0) {
-                await this.createPostTypes();
-            }
-            return PostType.find().exec();
         });
 
         this.blogs = await Blog.estimatedDocumentCount().exec().then(async (count) => {

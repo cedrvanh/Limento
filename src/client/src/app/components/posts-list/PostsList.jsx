@@ -11,24 +11,13 @@ import './PostsList.scss'
 import PostCard from '../post-card';
 
 class PostsLists extends Component {
-    readMoreHandler = (ev, id) => {
-        ev.preventDefault();
-        if (typeof this.props.onReadMore === 'function') {
-            this.props.onReadMore(id);
-        }
-    }
     render() {
-        const { posts } = this.props;
+        const { posts, onReadMore } = this.props;
 
         return (
             <React.Fragment>
                 {posts && posts.map( (post, index) => (
-                    <PostCard key={ post.id } post={ post }/>
-                    // <article key={ post.id } className={classNames("post--small")}>
-                    //     <h1 className="post__title">{ post.title }</h1>
-                    //     <div className="post__synopsis">{ post.synopsis }</div>
-                    //     <button onClick={(ev) => this.readMoreHandler(ev, post.id)}>More</button>
-                    // </article>
+                    <PostCard key={ post.id } post={ post } onReadMore={onReadMore}/>
                 ))}
             </React.Fragment>
         );

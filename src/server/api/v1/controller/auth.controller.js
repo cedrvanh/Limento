@@ -19,6 +19,7 @@ class AuthController {
             };
             const token = createToken(req.auth);
             return res.status(200).json({
+                uid: user.id,
                 email: user.email,
                 token: `${token}`,
                 strategy: 'local',

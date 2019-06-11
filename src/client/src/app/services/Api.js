@@ -1,3 +1,5 @@
+import axios from 'axios'; 
+
 class Api {
     static URL = '/api/v1';
 
@@ -11,7 +13,22 @@ class Api {
     }
 
     static findOnePost = async (id) => {
-        const response = await fetch(`${this.URL}/posts/${id}`);
+        let url = `${this.URL}/posts/${id}`;
+        const response = await fetch(`${url}`);
+        return await response.json();
+    }
+
+    static createPost = async (post) => {
+        let url = `${this.URL}/posts`;
+        await axios.post(`${url}`, post);
+    }
+
+    static findAllPostTypes = async (queryParams=null) => {
+        let url = `${this.URL}/types`;
+        if (queryParams !== null) {
+            url += (url.indexOf('?') === -1 ? '?' : '&') + this.queryParams(queryParams);
+        }   
+        const response = await fetch(`${url}`);
         return await response.json();
     }
 

@@ -10,21 +10,39 @@ class Auth {
         return await response.data;
     }
 
-    static logout = async () => {
+    static logout = () => {
         localStorage.clear();
     }
 
-    static setToken = (token) => {
-        localStorage.setItem('access_token', token);
+    static setToken = (user) => {
+        localStorage.setItem('user', JSON.stringify({ 
+            uid: user.uid, 
+            token: user.token 
+        }));
     }
 
     static getToken = () => {
-        return localStorage.getItem('access_token');
+        return JSON.parse(localStorage.getItem('user'));
     }
 
     static isAuthenticated = () => {
-        return localStorage.getItem('access_token') !== null;
+        return JSON.parse(localStorage.getItem('user')) !== null;
     } 
+
+    static getCurrentUID = () => {
+        const { uid } = this.getToken();
+        return uid;
+    }
+
+    static getCurrentUser = async () => {
+        const uid = this.getCurrentUID();
+        
+        let url = `${this.URL}/users/${uid}`;
+
+        const response = await axios.get(url);
+        return await response.data;
+    }
+
 }
 
 export default Auth;

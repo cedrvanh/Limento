@@ -13,7 +13,6 @@ const CategorySchema = new Schema(
         },
         published_at: { type: Date, required: false },
         deleted_at: { type: Date, required: false },
-        parentCategoryId: { type: Schema.Types.ObjectId, ref: 'Category', required: false },
     },
     {
         toJSON: { virtuals: true },
@@ -35,12 +34,6 @@ CategorySchema.pre('validate', function (next) {
 });
 
 CategorySchema.virtual('id').get(function () { return this._id; });
-CategorySchema.virtual('subCategories', {
-    ref: 'Category',
-    localField: '_id',
-    foreignField: 'parentCategoryId',
-    justOne: false,
-});
 
 CategorySchema.plugin(mongoosePaginate);
 export default mongoose.model('Category', CategorySchema);

@@ -11,8 +11,6 @@ Import internal libraries
 */
 import { Api } from '../../services';
 import PostsList from '../../components/posts-list';
-import PostCard from '../../components/post-card';
-import TabList from '../../components/tab-list';
 import Spinner from '../../components/base/spinner';
 
 class HomePage extends Component {
@@ -50,7 +48,7 @@ class HomePage extends Component {
     }
 
     goToPostDetailPage = (id) => {
-        this.props.history.push(`/news/${id}`);
+        this.props.history.push(`/feed/${id}`);
     }
 
     render() {

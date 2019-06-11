@@ -6,6 +6,7 @@ import TagController from './tag.controller';
 import PostController from './post.controller';
 import UserController from './user.controller';
 import CommentController from './comment.controller';
+import PostTypeController from './postTypes.controller';
 
 export {
     AuthController,
@@ -15,4 +16,5 @@ export {
     PostController,
     UserController,
     CommentController,
+    PostTypeController
 };

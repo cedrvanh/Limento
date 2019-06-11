@@ -3,14 +3,22 @@ import mongoosePaginate from 'mongoose-paginate';
 
 const { Schema } = mongoose;
 
-const MessageSchema = new Schema(
+const ConversationSchema = new Schema(
     {
-        text: { type: String, required: true, max: 512 },
-        sender: { 
+        userOneId: { 
             type: Schema.Types.ObjectId, 
             ref: 'User', 
             required: true 
         },
+        userTwoId: { 
+            type: Schema.Types.ObjectId, 
+            ref: 'User', 
+            required: true 
+        },
+        messages: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Messages'
+        }],
         published_at: { type: Date, required: false },
         deleted_at: { type: Date, required: false },
     },
@@ -23,13 +31,13 @@ const MessageSchema = new Schema(
     },
 );
 
-MessageSchema.virtual('id').get(function () { return this._id; });
-MessageSchema.virtual('user', {
+ConversationSchema.virtual('id').get(function () { return this._id; });
+ConversationSchema.virtual('user', {
     ref: 'User',
     localField: 'author',
     foreignField: '_id',
     justOne: true,
 });
 
-MessageSchema.plugin(mongoosePaginate);
-export default mongoose.model('Message', MessageSchema);
+ConversationSchema.plugin(mongoosePaginate);
+export default mongoose.model('Conversation', ConversationSchema);

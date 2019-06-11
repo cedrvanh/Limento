@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import Title from '../../components/base/title';
 
 import { Api } from '../../services/';
+import UserInfo from '../../components/user-info';
 
 class ProfilePage extends Component {
     state = {
@@ -40,7 +41,8 @@ class ProfilePage extends Component {
 
         return (
             <React.Fragment>
-                <Title type={3}>{ user.name }</Title>
+                <UserInfo user={ user } />
+                <Title type={4}>Bio: </Title>
                 <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae sunt molestias in odio quisquam rem architecto voluptatem non, velit illum distinctio earum dicta aspernatur enim doloremque culpa corrupti ea? Iste.
                 </p>
