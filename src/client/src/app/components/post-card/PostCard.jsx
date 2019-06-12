@@ -23,13 +23,12 @@ class PostCard extends Component {
 
     render() {
         const { post } = this.props;
-        const IMAGE_PATH = 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80';
 
         return (
             <React.Fragment>
                 <article className="card">
                     <UserInfo user={ post.user } />
-                    <img className="card__thumbnail" src={ IMAGE_PATH } />
+                    <img className="card__thumbnail" src={ post.media.path } />
                     <section className="card__content">
                         <Title type={4} style={{ margin: '8px 0' }}>{ post.title }</Title>
                     </section>

@@ -19,6 +19,7 @@ import userRouter from './user.routes';
 import tagRouter from './tag.routes';
 import commentRouter from './comment.routes';
 import postTypeRouter from './postType.routes';
+import mediaRouter from './media.routes';
 
 // Initialize the AuthService
 const authService = new AuthService();
@@ -34,5 +35,6 @@ userRouter(apiV1Router, authService);
 tagRouter(apiV1Router, authService);
 commentRouter(apiV1Router, authService);
 postTypeRouter(apiV1Router, authService);
+mediaRouter(apiV1Router, authService);
 
 export default apiV1Router;

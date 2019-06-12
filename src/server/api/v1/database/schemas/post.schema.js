@@ -14,10 +14,10 @@ const PostSchema = new Schema(
         },
         published_at: { type: Date, required: false },
         deleted_at: { type: Date, required: false },
-        // media: { type: Schema.Types.ObjectId, ref: 'Media', required: false },
-        userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-        typeId: { type: Schema.Types.ObjectId, ref: 'PostType', required: true },
-        categoryId: { type: Schema.Types.ObjectId, ref: 'Category', required: false },
+        media: { type: Schema.Types.ObjectId, ref: 'Media', required: false },
+        user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+        type: { type: Schema.Types.ObjectId, ref: 'PostType', required: true },
+        category: { type: Schema.Types.ObjectId, ref: 'Category', required: false },
     },
     {
         toJSON: { virtuals: true },
@@ -40,6 +40,9 @@ PostSchema.pre('validate', function (next) {
 });
 
 PostSchema.virtual('id').get(function () { return this._id; });
+
+/*
+TODO: Move
 
 PostSchema.virtual('user', {
     ref: 'User',
@@ -68,6 +71,7 @@ PostSchema.virtual('media', {
     foreignField: '_id',
     justOne: true,
 });
+*/
 
 PostSchema.plugin(mongoosePaginate);
 export default mongoose.model('Post', PostSchema);

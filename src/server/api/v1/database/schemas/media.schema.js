@@ -6,7 +6,6 @@ const { Schema } = mongoose;
 const MediaSchema = new Schema(
     {
         path: { type: String, required: true },
-        type: { type: String, required: true },
         published_at: { type: Date, required: false },
         deleted_at: { type: Date, required: false },
     },

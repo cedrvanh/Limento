@@ -7,6 +7,7 @@ import PostController from './post.controller';
 import UserController from './user.controller';
 import CommentController from './comment.controller';
 import PostTypeController from './postTypes.controller';
+import MediaController from './media.controller';
 
 export {
     AuthController,
@@ -16,5 +17,6 @@ export {
     PostController,
     UserController,
     CommentController,
-    PostTypeController
+    PostTypeController,
+    MediaController
 };
