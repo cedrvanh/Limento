@@ -18,12 +18,11 @@ class HomePage extends Component {
     
     state = {
           posts: [],
-          isLoading: true,
+          isLoading: true
     };
 
     componentWillMount() {
         this._isMounted = true;
-
         this.loadPosts();
     }
 
@@ -52,13 +51,14 @@ class HomePage extends Component {
     }
 
     render() {
+        const { activeTab } = this.props;
         const { posts, isLoading } = this.state;
 
         return (
             <React.Fragment>
                 <section className="section__content section__content--articles">
                     {
-                        isLoading ? <Spinner /> : <PostsList posts={posts} onReadMore={this.goToPostDetailPage} />
+                        isLoading ? <Spinner /> : <PostsList posts={posts} onReadMore={this.goToPostDetailPage} activeTab={activeTab}/>
                     } 
                 </section>
             </React.Fragment>

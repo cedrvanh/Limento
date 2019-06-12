@@ -21,11 +21,12 @@ const styles = theme => ({
 });
 
 function TabList(props) {
-    const { classes } = props;
+    const { classes, onTabChange } = props;
     const [value, setValue] = React.useState(0);
 
     function handleChange(event, newValue) {
         setValue(newValue);
+        onTabChange(event, newValue);
     }
 
     return (

@@ -13,25 +13,40 @@ import BottomNav from '../components/bottom-nav';
 import TabList from '../components/tab-list';
 
 class PageLayout extends React.Component {
+    state = {
+        activeTab: 0,
+    }
 
     isPath = (path) => {
         return this.props.location.pathname == path;
     }
 
+    onTabChange = (e, newValue) => {
+        this.setState({
+            activeTab: newValue
+        });
+    };
+
     render() {
         const { children, classes } = this.props;
+        const { activeTab } = this.state;
+
+        // Pass props to this.children elements
+        const childrenWithProps = React.Children.map(children, child =>
+            React.cloneElement(child, { activeTab })
+        );
 
         return (
             <div className="page">
                 <header role="header">
                     <TopNav />
                     {
-                        this.isPath('/') ? <TabList /> : null
+                        this.isPath('/') ? <TabList activeTab={activeTab} onTabChange={this.onTabChange} /> : null
                     }
                 </header>
                 <main className="main" role="main">
                     <div className="container">
-                        { children }
+                        { childrenWithProps }
                     </div>
                 </main>
                 <footer role="footer">
