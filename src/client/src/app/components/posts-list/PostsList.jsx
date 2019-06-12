@@ -17,11 +17,9 @@ class PostsLists extends Component {
     } 
 
     render() {
-        const { posts, onReadMore, activeTab } = this.props;
+        const { posts, onReadMore } = this.props;
         
-        const filteredPosts = posts.filter((post) => {
-            return post.type.name === this.setPostType();
-        })
+        const filteredPosts = posts.filter((post) => post.type.name === this.setPostType());
 
         return (
             <React.Fragment>
