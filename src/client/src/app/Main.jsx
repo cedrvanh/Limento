@@ -45,7 +45,7 @@ class Main extends Component {
           <RouteWithLayout exact path='/feed' layout={ PageLayout } component={ NewsPage }/>
           <RouteWithLayout exact path='/feed/create' layout={ PageLayout } component={ PostCreatePage }/>
           <RouteWithLayout exact path='/feed/:id' layout={ PageLayout } component={ PostDetailPage }/>
-          <RouteWithLayout path='/profile' layout={ PageLayout } component={ ProfilePage }/>
+          <RouteWithLayout path='/profile/:id' layout={ PageLayout } component={ ProfilePage }/>
           <RouteWithLayout path='/chat' layout={ PageLayout } component={ ChatPage }/>
           <RouteWithLayout path='/about' layout={ PageLayout } component={ AboutPage }/>
           <RouteWithLayout path="/login" layout={ LoginLayout } component={ LoginPage }></RouteWithLayout>

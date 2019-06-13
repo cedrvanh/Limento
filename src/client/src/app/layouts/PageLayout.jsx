@@ -11,10 +11,12 @@ import Grid from '@material-ui/core/Grid';
 import TopNav from '../components/top-nav';
 import BottomNav from '../components/bottom-nav';
 import TabList from '../components/tab-list';
+import { Auth } from '../services';
 
 class PageLayout extends React.Component {
     state = {
         activeTab: 0,
+        uid: Auth.getCurrentUID()
     }
 
     isPath = (path) => {
@@ -29,7 +31,7 @@ class PageLayout extends React.Component {
 
     render() {
         const { children, classes } = this.props;
-        const { activeTab } = this.state;
+        const { activeTab, uid } = this.state;
 
         // Pass props to this.children elements
         const childrenWithProps = React.Children.map(children, child =>
@@ -50,7 +52,7 @@ class PageLayout extends React.Component {
                     </div>
                 </main>
                 <footer role="footer">
-                    <BottomNav />
+                    <BottomNav uid={ uid } />
                 </footer>
             </div>
         )

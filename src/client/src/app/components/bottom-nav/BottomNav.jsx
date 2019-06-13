@@ -47,8 +47,10 @@ const styles = theme => ({
 });
 
 function BottomNav(props) {
-    const { classes } = props;
+    const { classes, uid } = props;
     const [value, setValue] = React.useState(0);
+
+    const profileRoute = `/profile/${uid}`;
 
     return (
       <BottomNavigation
@@ -68,7 +70,7 @@ function BottomNav(props) {
         <BottomNavigationAction 
           className={[classes.root, classes.selected]}
           component={Link} 
-          to="/profile" 
+          to={profileRoute} 
           label="Profile" 
           icon={<ProfileIcon />} 
         />
