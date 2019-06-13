@@ -9,6 +9,7 @@ import Title from '../../components/base/title';
 
 import { Api, Auth } from '../../services/';
 import UserInfo from '../../components/user-info';
+import { PostCard, PostCardProfile } from '../../components/post';
 
 class ProfilePage extends Component {
     state = {
@@ -50,7 +51,7 @@ class ProfilePage extends Component {
                 <Divider></Divider>
                 {
                     user.posts && user.posts.map((post, index) => (
-                        console.log(post)
+                        <PostCardProfile key={ post.id } post={ post } />
                     ))
                 }
             </React.Fragment>

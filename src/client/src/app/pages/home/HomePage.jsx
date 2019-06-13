@@ -10,7 +10,7 @@ import Grid from '@material-ui/core/Grid';
 Import internal libraries
 */
 import { Api } from '../../services';
-import PostsList from '../../components/posts-list';
+import { PostsList } from '../../components/post';
 import Spinner from '../../components/base/spinner';
 
 class HomePage extends Component {

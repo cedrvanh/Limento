@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 Import internal libraries
 */
 import { Api } from '../../services';
-import PostDetail from '../../components/post-detail';
+import { PostDetail } from '../../components/post';
 import Spinner from '../../components/base/spinner';
 
 class PostDetailPage extends Component {

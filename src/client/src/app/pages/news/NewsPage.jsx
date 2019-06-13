@@ -7,7 +7,7 @@ import React, { Component } from 'react';
 Import internal libraries
 */
 import { Api } from '../../services';
-import PostsListPaged from '../../components/posts-list-paged';
+import { PostsListPaged } from '../../components/post';
 
 class NewsPage extends Component {
     state = {
