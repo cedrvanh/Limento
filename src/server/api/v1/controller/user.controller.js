@@ -21,12 +21,12 @@ class UserController {
                 const options = {
                     page: parseInt(skip, 10) || 1,
                     limit: parseInt(limit, 10) || 10,
-                    populate: 'category',
+                    populate: 'posts',
                     sort: { created_at: -1 },
                 };
                 posts = await User.paginate({}, options);
             } else {
-                posts = await User.find().populate('category').sort({ created_at: -1 }).exec();
+                posts = await User.find().sort({ created_at: -1 }).exec();
             }
 
             if (posts === undefined || posts === null) {
@@ -42,7 +42,7 @@ class UserController {
     show = async (req, res, next) => {
         try {
             const { id } = req.params;
-            const item = await User.findById(id).populate('category').exec();
+            const item = await User.findById(id).populate('posts').exec();
             if (item === undefined || item === null) {
                 throw new APIError(404, `User with id: ${id} not found!`);
             }

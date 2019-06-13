@@ -7,7 +7,6 @@ import { withStyles } from '@material-ui/core/styles';
 import BottomNavigation from '@material-ui/core/BottomNavigation';
 import BottomNavigationAction from '@material-ui/core/BottomNavigationAction';
 import HomeIcon from '@material-ui/icons/Home';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import InfoIcon from '@material-ui/icons/InfoRounded';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubble';
 import ProfileIcon from '@material-ui/icons/Person';
@@ -47,9 +46,6 @@ const styles = theme => ({
     selected: {}
 });
 
-const actionClass = classNames({
-  
-});
 function BottomNav(props) {
     const { classes } = props;
     const [value, setValue] = React.useState(0);

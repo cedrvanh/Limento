@@ -12,7 +12,7 @@ import { RouteWithLayout } from './utilities';
 /*
 Layout
 */
-import { LoginLayout, PageLayout, FullPageLayout } from './layouts';
+import { LoginLayout, PageLayout } from './layouts';
 import { AdminLayout } from './admin/layouts';
 
 /*
@@ -49,6 +49,7 @@ class Main extends Component {
           <RouteWithLayout path='/chat' layout={ PageLayout } component={ ChatPage }/>
           <RouteWithLayout path='/about' layout={ PageLayout } component={ AboutPage }/>
           <RouteWithLayout path="/login" layout={ LoginLayout } component={ LoginPage }></RouteWithLayout>
+          <RouteWithLayout path="/register" layout={ LoginLayout } component={ RegisterPage }></RouteWithLayout>
           <RouteWithLayout path="/logout" layout={ LoginLayout } component={ LogOutPage }></RouteWithLayout>
           <RouteWithLayout path="/admin" layout={ AdminLayout } component={ AdminPage }></RouteWithLayout>
           <RouteWithLayout layout={ PageLayout } component={ NotFoundPage }></RouteWithLayout>

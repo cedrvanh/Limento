@@ -25,9 +25,7 @@ const styles = theme => ({
 
 function TopNav(props) {
     const { classes } = props;
-    const [auth, setAuth] = React.useState(true);
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const open = Boolean(anchorEl);
 
     function handleMenu(event) {
         setAnchorEl(event.currentTarget);

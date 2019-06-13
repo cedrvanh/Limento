@@ -96,6 +96,12 @@ UserSchema.pre('save', function (next) {
     }
 });
 
+UserSchema.virtual('posts', {
+    ref: 'Post',
+    localField: '_id',
+    foreignField: 'user',
+});
+
 UserSchema.methods.comparePassword = function (candidatePassword, cb) {
     const user = this;
     bcrypt.compare(candidatePassword, user.password, (err, isMatch) => {

@@ -3,9 +3,11 @@ Import extenal libraries
 */
 import React, { Component } from 'react';
 
+import Divider from '@material-ui/core/Divider';
+
 import Title from '../../components/base/title';
 
-import { Api } from '../../services/';
+import { Api, Auth } from '../../services/';
 import UserInfo from '../../components/user-info';
 
 class ProfilePage extends Component {
@@ -13,8 +15,7 @@ class ProfilePage extends Component {
         user: [],
         isLoading: true,
 
-        // Hardcoded for the moment
-        id: '5cfaedcd3fe1590cb4cc8fe2'
+        uid: Auth.getCurrentUID()
     };
 
     componentWillMount() {
@@ -22,7 +23,7 @@ class ProfilePage extends Component {
     }
 
     loadUser = () => {
-        Api.findOneUser(this.state.id)
+        Api.findOneUser(this.state.uid)
             .then((data) => {
                 this.setState(prevState => ({
                     ...prevState,
@@ -46,6 +47,12 @@ class ProfilePage extends Component {
                 <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae sunt molestias in odio quisquam rem architecto voluptatem non, velit illum distinctio earum dicta aspernatur enim doloremque culpa corrupti ea? Iste.
                 </p>
+                <Divider></Divider>
+                {
+                    user.posts && user.posts.map((post, index) => (
+                        console.log(post)
+                    ))
+                }
             </React.Fragment>
         )
     }

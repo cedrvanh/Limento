@@ -25,7 +25,7 @@ class PostDetail extends Component {
             <React.Fragment>
                 <article key={ post.id } className={classNames("post--large")}>
                     <span onClick={this.goBack}>Back</span>
-                    <img className="card__thumbnail" src={ IMAGE_PATH } />
+                    <img className="card__thumbnail" alt='Post thumbnail' src={ IMAGE_PATH } />
                     <h1 className="post__title">{ post.title }</h1>
                     <div className="post__synopsis">{ post.synopsis }</div>
                     <div className="post__body">{Parser(post.body)}</div>

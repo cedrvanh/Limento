@@ -7,7 +7,7 @@ import './Page.scss';
 
 class PageLayout extends React.Component {
     render() {
-        const { children, classes } = this.props;
+        const { children } = this.props;
 
         return (
             <div className="page--full">

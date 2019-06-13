@@ -27,7 +27,6 @@ class PostCard extends Component {
         return (
             <React.Fragment>
                 <article className="card">
-                    <UserInfo user={ post.user } />
                     <img className="card__thumbnail" src={ post.media.path } />
                     <section className="card__content">
                         <Title type={4} style={{ margin: '8px 0' }}>{ post.title }</Title>
