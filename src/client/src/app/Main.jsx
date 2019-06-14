@@ -12,7 +12,7 @@ import { RouteWithLayout } from './utilities';
 /*
 Layout
 */
-import { LoginLayout, PageLayout } from './layouts';
+import { LoginLayout, PageLayout, PageWithoutBottomLayout } from './layouts';
 import { AdminLayout } from './admin/layouts';
 
 /*
@@ -43,7 +43,7 @@ class Main extends Component {
           <RouteWithLayout exact path='/' layout={ PageLayout } component={ HomePage }/>
           <Redirect from="/home" to="/"/>
           <RouteWithLayout exact path='/feed' layout={ PageLayout } component={ NewsPage }/>
-          <RouteWithLayout exact path='/feed/create' layout={ PageLayout } component={ PostCreatePage }/>
+          <RouteWithLayout exact path='/feed/create' layout={ PageWithoutBottomLayout } component={ PostCreatePage }/>
           <RouteWithLayout exact path='/feed/:id' layout={ PageLayout } component={ PostDetailPage }/>
           <RouteWithLayout path='/profile/:id' layout={ PageLayout } component={ ProfilePage }/>
           <RouteWithLayout path='/chat' layout={ PageLayout } component={ ChatPage }/>

@@ -18,6 +18,7 @@ const PostSchema = new Schema(
         user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
         type: { type: Schema.Types.ObjectId, ref: 'PostType', required: true },
         category: { type: Schema.Types.ObjectId, ref: 'Category', required: false },
+        tags: [{ type: Schema.Types.ObjectId, ref: 'Tag', required: false }]
     },
     {
         toJSON: { virtuals: true },

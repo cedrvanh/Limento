@@ -6,11 +6,6 @@ import classNames from 'classnames';
 
 import Title from '../../base/title';
 
-/*
-Styling
-*/
-import '../../../_sass/components/_card.scss';
-
 import UserInfo from '../../user-info';
 import EditIcon from '@material-ui/icons/Edit';
 import IconButton from '@material-ui/core/IconButton';

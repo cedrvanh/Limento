@@ -32,6 +32,15 @@ class Api {
         return await response.json();
     }
 
+    static findAllTags = async (queryParams=null) => {
+        let url = `${this.URL}/tags`;
+        if (queryParams !== null) {
+            url += (url.indexOf('?') === -1 ? '?' : '&') + this.queryParams(queryParams);
+        }   
+        const response = await axios.get(`${url}`);
+        return await response.data;
+    }
+
     static findOneUser = async (id) => {
         const response = await fetch(`${this.URL}/users/${id}`);
         return await response.json();

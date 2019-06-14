@@ -1,9 +1,9 @@
 import LoginLayout from './LoginLayout';
 import PageLayout from './PageLayout';
-import FullPageLayout from './FullPageLayout';
+import PageWithoutBottomLayout from './PageWithoutBottomLayout';
 
 export {
     LoginLayout,
     PageLayout,
-    FullPageLayout
+    PageWithoutBottomLayout
 }

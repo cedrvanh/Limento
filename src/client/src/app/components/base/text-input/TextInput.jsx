@@ -23,11 +23,12 @@ const styles = theme => ({
 });
 
 const TextInput = (props) => {
-    const { classes, label, onChange, value, id } = props; 
+    const { classes, label, onChange, value, id, type } = props; 
 
     return (
         <Paper className={classes.root}>
             <InputBase
+                type={type}
                 className={classes.input}
                 id={id}
                 placeholder={label}

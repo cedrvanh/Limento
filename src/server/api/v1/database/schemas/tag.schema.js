@@ -7,7 +7,6 @@ const { Schema } = mongoose;
 const TagSchema = new Schema(
     {
         name: { type: String, required: true, max: 128 },
-        description: { type: String, required: true, max: 512 },
         slug: {
             type: String, lowercase: true, unique: true, required: true,
         },

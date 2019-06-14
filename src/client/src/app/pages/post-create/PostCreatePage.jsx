@@ -13,26 +13,40 @@ import TextInput from '../../components/base/text-input';
 import Title from '../../components/base/title';
 
 import { Api, Auth } from '../../services';
+import Tag from '../../components/base/tag';
 
 class PostCreatePage extends Component {
     state = {
         types: [],
+        tags: [],
+        selectedTags: [],
         postType: null,
         title: '',
-        synopsis: ''
+        synopsis: '',
+        price: null,
     }
 
     componentWillMount() {
         this.loadPostTypes(); 
+        this.loadTags();
     }
 
     loadPostTypes = () => {
         Api.findAllPostTypes()
-            .then(data => {
+            .then(res => {
                 this.setState({
-                    types: data
+                    types: res
                 });
             });
+    }
+
+    loadTags = () => {
+        Api.findAllTags()
+            .then(res => {
+                this.setState({
+                    tags: res
+                })
+            })
     }
 
     onSubmit = () => {
@@ -56,13 +70,11 @@ class PostCreatePage extends Component {
     }
 
     render() {
-        const { types } = this.state;
+        const { types, tags } = this.state;
 
         return (
             <React.Fragment>
-                <section class="banner">
-                    <Title type={1}>Create a new post</Title>
-                </section>
+                <Title type={1}>Create a new post</Title>
                 <FormControl component="fieldset">
                     <RadioGroup
                     
@@ -77,9 +89,16 @@ class PostCreatePage extends Component {
                     </RadioGroup>
                 </FormControl>
 
-                <TextInput id='title' label="Title" value={this.state.title} onChange={(e) => this.handleChange(e)} />
-                <TextInput id='synopsis' label="Synopsis" value={this.state.synopsis} onChange={(e) => this.handleChange(e)} />
-
+                <TextInput type={'text'} id='title' label="Title" value={this.state.title} onChange={(e) => this.handleChange(e)} />
+                <TextInput type={'text'} id='synopsis' label="Synopsis" value={this.state.synopsis} onChange={(e) => this.handleChange(e)} />
+                <TextInput type={'number'} id='price' label="Price" value={this.state.price} onChange={(e) => this.handleChange(e)} />
+                
+                <section class="tag__wrapper">
+                    {tags && tags.map( (tag, index) => (
+                        <Tag key={ tag.id } label={ tag.name } value={ tag.id } />
+                    ))}
+                </section>
+                                
                 <Button variant="contained" color="secondary" fullWidth onClick={this.onSubmit}>
                     Create post
                 </Button>

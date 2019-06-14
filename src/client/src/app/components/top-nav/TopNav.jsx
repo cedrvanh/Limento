@@ -1,9 +1,11 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Title from '../base/title';
 
 import '../../layouts/Page.scss';
@@ -24,7 +26,7 @@ const styles = theme => ({
 });
 
 function TopNav(props) {
-    const { classes } = props;
+    const { classes, backBar, history } = props;
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     function handleMenu(event) {
@@ -35,13 +37,25 @@ function TopNav(props) {
         setAnchorEl(null);
     }
 
+    if (backBar) {
+        return (
+            <div className={classes.root}>
+                <AppBar className={classes.colorDefault}>
+                    <Toolbar>
+                        <ArrowBackIcon onClick={() => history.goBack()}/>
+                    </Toolbar>
+                </AppBar>
+            </div>
+        )
+    }
+
     return (
         <div className={classes.root}>
             <AppBar className={classes.colorDefault}>
                 <Toolbar>
-                <Title type={3} className={classes.title}>
-                    Limento
-                </Title>
+                    <Title type={3} className={classes.title}>
+                        Limento
+                    </Title>
                     <IconButton
                         aria-label="Account of current user"
                         aria-controls="menu-appbar"
@@ -57,4 +71,4 @@ function TopNav(props) {
     );
 }
 
-export default withStyles(styles)(TopNav);
+export default withRouter(withStyles(styles)(TopNav));

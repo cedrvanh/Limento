@@ -63,6 +63,23 @@ class Seeder {
         }
     }
 
+    tagCreate = async (name) => {
+        const tagDetail = {
+            name
+        };
+        const tag = new Tag(tagDetail);
+
+        try {
+            const newTag = await tag.save();
+
+            this.tags.push(newTag);
+
+            logger.log({ level: 'info', message: `Tag created with id: ${newTag.id}!` });
+        } catch (err) {
+            logger.log({ level: 'info', message: `An error occurred when creating a tag: ${err}!` });
+        }
+    }
+
     mediaCreate = async (path) => {
         const mediaDetail = {
             path,
@@ -106,6 +123,7 @@ class Seeder {
             type: this.getRandomPostType(),
             category: this.getRandomCategory(),
             media: this.getRandomMedia(),
+            tags: [this.getRandomTag(), this.getRandomTag()]
         };
         const post = new Post(postDetail);
 
@@ -141,24 +159,6 @@ class Seeder {
             logger.log({ level: 'info', message: `User created with id: ${newUser.id}!` });
         } catch (err) {
             logger.log({ level: 'info', message: `An error occurred when creating a user: ${err}!` });
-        }
-    }
-
-    tagCreate = async (name, description) => {
-        const tagDetail = {
-            name,
-            description,
-        };
-        const tag = new Tag(tagDetail);
-
-        try {
-            const newTag = await tag.save();
-
-            this.tags.push(newTag);
-
-            logger.log({ level: 'info', message: `Tag created with id: ${newTag.id}!` });
-        } catch (err) {
-            logger.log({ level: 'info', message: `An error occurred when creating a tag: ${err}!` });
         }
     }
 
@@ -217,10 +217,12 @@ class Seeder {
 
     createTags = async () => {
         await Promise.all([
-            (async () => this.tagCreate(faker.lorem.word(), faker.lorem.sentence()))(),
-            (async () => this.tagCreate(faker.lorem.word(), faker.lorem.sentence()))(),
-            (async () => this.tagCreate(faker.lorem.word(), faker.lorem.sentence()))(),
-            (async () => this.tagCreate(faker.lorem.word(), faker.lorem.sentence()))(),
+            (async () => this.tagCreate('Mexican'))(),
+            (async () => this.tagCreate('Spicy'))(),
+            (async () => this.tagCreate('Italian'))(),
+            (async () => this.tagCreate('BBQ'))(),
+            (async () => this.tagCreate('Smoothies'))(),
+            (async () => this.tagCreate('Ice Cream'))(),
         ]);
     }
 
@@ -230,6 +232,14 @@ class Seeder {
             category = this.categories[Math.round(Math.random() * (this.categories.length - 1))];
         }
         return category;
+    }
+
+    getRandomTag = () => {
+        let tag = null;
+        if (this.tags && this.tags.length > 0) {
+            tag = this.tags[Math.round(Math.random() * (this.tags.length - 1))];
+        }
+        return tag;
     }
 
     getRandomMedia = () => {
@@ -283,6 +293,13 @@ class Seeder {
             return Media.find().exec();
         });
 
+        this.tags = await Tag.estimatedDocumentCount().exec().then(async (count) => {
+            if (count === 0) {
+                await this.createTags();
+            }
+            return Tag.find().exec();
+        });
+        
         this.users = await User.estimatedDocumentCount().exec().then(async (count) => {
             if (count === 0) {
                 await this.createUsers();
@@ -309,13 +326,6 @@ class Seeder {
                 await this.createBlogs();
             }
             return Blog.find().exec();
-        });
-
-        this.tags = await Tag.estimatedDocumentCount().exec().then(async (count) => {
-            if (count === 0) {
-                await this.createTags();
-            }
-            return Tag.find().exec();
         });
     }
 }

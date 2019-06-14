@@ -4,13 +4,17 @@ import React from 'react';
 Import styling
 */
 import './Page.scss';
+import TopNav from '../components/top-nav';
 
-class PageLayout extends React.Component {
+class PageWithoutBottomLayout extends React.Component {
     render() {
         const { children } = this.props;
 
         return (
-            <div className="page--full">
+            <div className="page">
+                <header role="header">
+                    <TopNav history={this.props.history} backBar/>
+                </header>
                 <main className="main" role="main">
                     <div className="container">
                         { children }
@@ -21,4 +25,4 @@ class PageLayout extends React.Component {
     }
 }
  
-export default PageLayout;
+export default PageWithoutBottomLayout;
