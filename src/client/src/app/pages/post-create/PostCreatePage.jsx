@@ -26,9 +26,9 @@ class PostCreatePage extends Component {
         price: null,
     }
 
-    componentWillMount() {
-        this.loadPostTypes(); 
-        this.loadTags();
+    async componentWillMount() {
+        await this.loadPostTypes(); 
+        await this.loadTags();
     }
 
     loadPostTypes = () => {
@@ -53,15 +53,28 @@ class PostCreatePage extends Component {
         const post = {
             title: this.state.title,
             synopsis: this.state.synopsis,
-            typeId: this.state.postType,
-            userId: Auth.getCurrentUID()
+            type: this.state.postType,
+            tags: this.state.selectedTags,
+            user: Auth.getCurrentUID()
         }
        
         Api.createPost(post) 
             .then(res => {
-                console.log(`User: ${post.userId} created a new post`);
-            });
+                console.log(`User: ${post.user} created a new post`);
+            })
     }
+
+    onTagClick = (e, id) => {
+        if (this.state.selectedTags.indexOf(id) < 0) {
+            this.setState({
+                selectedTags: [...this.state.selectedTags, id]
+            });
+        } else {
+            this.setState(prevState => ({
+                selectedTags: prevState.selectedTags.filter((i) => i !== id)
+            }));
+        }
+    } 
 
     handleChange = (e) => {
         this.setState({
@@ -95,7 +108,7 @@ class PostCreatePage extends Component {
                 
                 <section class="tag__wrapper">
                     {tags && tags.map( (tag, index) => (
-                        <Tag key={ tag.id } label={ tag.name } value={ tag.id } />
+                        <Tag key={ tag.id } label={ tag.name } value={ tag.id } onTagClick={this.onTagClick}/>
                     ))}
                 </section>
                                 

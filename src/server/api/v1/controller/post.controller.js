@@ -21,12 +21,18 @@ class PostController {
                 const options = {
                     page: parseInt(skip, 10) || 1,
                     limit: parseInt(limit, 10) || 10,
-                    populate:  ['category', 'user', 'type', 'media'],
+                    populate:  ['category', 'user', 'type', 'media', 'tags'],
                     sort: { created_at: -1 },
                 };
                 posts = await Post.paginate({}, options);
             } else {
-                posts = await Post.find().populate('category').populate('user', 'avatar name').populate('type', 'name').populate('media').sort({ created_at: -1 }).exec();
+                posts = await Post.find()
+                .populate('category')
+                .populate('user', 'avatar name')
+                .populate('type', 'name')
+                .populate('tags', 'name')
+                .populate('media')
+                .sort({ created_at: -1 }).exec();
             }
 
             if (posts === undefined || posts === null) {
@@ -68,9 +74,9 @@ class PostController {
                 synopsis: req.body.synopsis,
                 body: req.body.body,
                 category: req.body.categoryId,
-                type: req.body.typeId,
-                user: req.body.userId,
-                tags: req.body.tagId
+                type: req.body.type,
+                user: req.body.user,
+                tags: req.body.tags
             });
             const post = await postCreate.save();
             return res.status(201).json(post);

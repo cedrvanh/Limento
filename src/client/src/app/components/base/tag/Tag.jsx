@@ -10,7 +10,9 @@ class Tag extends Component {
         iconVisible: false,
     }
 
-    onClick = (e) => {
+    onClick = (e, id) => {
+        this.props.onTagClick(e, id);
+
         this.setState(prevState => ({
             active: !prevState.active,
             iconVisible: !prevState.iconVisible
@@ -18,14 +20,14 @@ class Tag extends Component {
     }
 
     render () {
-        const { classes } = this.props;
+        const { classes, value } = this.props;
         const { active } = this.state;
     
         return (
             <Chip 
                 className={['tag', active ? '' : classes.hide ]} 
                 color={active ? 'secondary' : 'default'}
-                onClick={this.onClick} 
+                onClick={(e) => this.onClick(e, value)} 
                 onDelete={this.onClick}
                 clickable 
                 {...this.props} 
