@@ -4,6 +4,8 @@ Import external libraries
 import React, { Component } from 'react';
 import classNames from 'classnames';
 
+import { Auth } from '../../../services';
+
 /*
 Styling
 */
@@ -19,7 +21,8 @@ class PostsLists extends Component {
     render() {
         const { posts, onReadMore } = this.props;
         
-        const filteredPosts = posts.filter((post) => post.type.name === this.setPostType());
+        // Filter out Authenticated user posts & selected Post Type
+        const filteredPosts = posts.filter((post) => post.type.name === this.setPostType() && post.user.id !== Auth.getCurrentUID());
 
         return (
             <React.Fragment>
