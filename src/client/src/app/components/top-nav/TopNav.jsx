@@ -4,7 +4,8 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import SearchIcon from '@material-ui/icons/Search';
+import FilterIcon from '@material-ui/icons/FilterList';
+import MoreIcon from '@material-ui/icons/MoreVert';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import Title from '../base/title';
 
@@ -57,13 +58,22 @@ function TopNav(props) {
                         Limento
                     </Title>
                     <IconButton
-                        aria-label="Account of current user"
+                        aria-label="Filter of posts"
                         aria-controls="menu-appbar"
                         aria-haspopup="true"
                         onClick={handleMenu}
                         color="inherit"
                     >
-                        <SearchIcon />
+                        <FilterIcon />
+                    </IconButton>
+                    <IconButton
+                        aria-label="User actions"
+                        aria-controls="menu-appbar"
+                        aria-haspopup="true"
+                        onClick={handleMenu}
+                        color="inherit"
+                    >
+                        <MoreIcon />
                     </IconButton>
                 </Toolbar>
             </AppBar>
