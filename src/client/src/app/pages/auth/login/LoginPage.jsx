@@ -95,6 +95,7 @@ class LoginPage extends Component {
     Auth.login(user) 
       .then(res => {
         Auth.setToken(res);
+        // setAuthToken(res.token);
         this.props.history.push('/');
       });
   }

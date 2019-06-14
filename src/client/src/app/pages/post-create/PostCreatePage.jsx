@@ -20,7 +20,7 @@ class PostCreatePage extends Component {
         types: [],
         tags: [],
         selectedTags: [],
-        postType: null,
+        selectedType: null,
         title: '',
         synopsis: '',
         price: null,
@@ -53,7 +53,7 @@ class PostCreatePage extends Component {
         const post = {
             title: this.state.title,
             synopsis: this.state.synopsis,
-            type: this.state.postType,
+            type: this.state.selectedType,
             tags: this.state.selectedTags,
             user: Auth.getCurrentUID()
         }

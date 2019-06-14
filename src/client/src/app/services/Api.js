@@ -1,4 +1,23 @@
-import axios from 'axios'; 
+import axios from 'axios';
+
+import Auth from './Auth';
+import { setAuthToken } from '../utilities';
+
+
+const instance = axios.create();
+instance.interceptors.request.use(
+    (config) => {
+        let user = Auth.getToken();
+
+        setAuthToken(user.token);
+
+        return config;
+    },
+
+    (error) => {
+        return Promise.reject(error);
+    }
+);
 
 class Api {
     static URL = '/api/v1';
@@ -8,19 +27,19 @@ class Api {
         if (queryParams !== null) {
             url += (url.indexOf('?') === -1 ? '?' : '&') + this.queryParams(queryParams);
         }   
-        const response = await fetch(`${url}`);
-        return await response.json();
+        const response = await instance.get(`${url}`);
+        return await response.data;
     }
 
     static findOnePost = async (id) => {
         let url = `${this.URL}/posts/${id}`;
-        const response = await fetch(`${url}`);
-        return await response.json();
+        const response = await instance.get(`${url}`);
+        return await response.data;
     }
 
     static createPost = async (post) => {
         let url = `${this.URL}/posts`;
-        await axios.post(`${url}`, post);
+        await instance.post(`${url}`, post);
     }
 
     static findAllPostTypes = async (queryParams=null) => {
@@ -28,8 +47,8 @@ class Api {
         if (queryParams !== null) {
             url += (url.indexOf('?') === -1 ? '?' : '&') + this.queryParams(queryParams);
         }   
-        const response = await fetch(`${url}`);
-        return await response.json();
+        const response = await instance.get(`${url}`);
+        return await response.data;
     }
 
     static findAllTags = async (queryParams=null) => {
@@ -37,13 +56,13 @@ class Api {
         if (queryParams !== null) {
             url += (url.indexOf('?') === -1 ? '?' : '&') + this.queryParams(queryParams);
         }   
-        const response = await axios.get(`${url}`);
+        const response = await instance.get(`${url}`);
         return await response.data;
     }
 
     static findOneUser = async (id) => {
-        const response = await fetch(`${this.URL}/users/${id}`);
-        return await response.json();
+        const response = await instance.get(`${this.URL}/users/${id}`);
+        return await response.data;
     }
 
     static queryParams = (params) => {
