@@ -27,22 +27,8 @@ const styles = theme => ({
 });
 
 class FilterPanel extends Component {
-    state = {
-        isDrawerOpen: true,
-    }
-
-    handleDrawerOpen = () => {
-        console.log('Drawer opened');
-        this.setState({ isDrawerOpen: true });
-    };
-
-    handleDrawerClose = () => {
-        console.log('Drawer closed');
-        this.setState({ isDrawerOpen: false });
-    };
-
     render() {
-        const { classes, isDrawerOpen, handleDrawerClose } = this.props;
+        const { classes, isDrawerOpen, handleDrawer } = this.props;
 
         return (
             
@@ -55,7 +41,7 @@ class FilterPanel extends Component {
             open={isDrawerOpen}
             >
                 <div className={classes.drawerHeader}>
-                    <IconButton onClick={handleDrawerClose}>
+                    <IconButton onClick={handleDrawer}>
                         <ChevronLeftIcon />
                     </IconButton>
                 </div>

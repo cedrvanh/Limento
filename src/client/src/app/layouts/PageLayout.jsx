@@ -16,6 +16,7 @@ import { Auth } from '../services';
 class PageLayout extends React.Component {
     state = {
         activeTab: 0,
+        isDrawerOpen: false,
         uid: Auth.getCurrentUID()
     }
 
@@ -33,19 +34,23 @@ class PageLayout extends React.Component {
         this.props.history.push('/logout');
     }
 
+    handleDrawer = () => {
+        this.setState(prevState => ({ isDrawerOpen: !prevState.isDrawerOpen }));
+    };
+
     render() {
         const { children, classes } = this.props;
-        const { activeTab, uid } = this.state;
+        const { activeTab, uid, isDrawerOpen } = this.state;
 
         // Pass props to this.children elements
         const childrenWithProps = React.Children.map(children, child =>
-            React.cloneElement(child, { activeTab })
+            React.cloneElement(child, { activeTab, isDrawerOpen, handleDrawer: this.handleDrawer })
         );
 
         return (
             <div className="page">
                 <header role="header">
-                    <TopNav onLogOut={this.onLogOut} />
+                    <TopNav onLogOut={this.onLogOut} handleDrawer={this.handleDrawer} />
                     {
                         this.isPath('/') ? <TabList activeTab={activeTab} onTabChange={this.onTabChange} /> : null
                     }

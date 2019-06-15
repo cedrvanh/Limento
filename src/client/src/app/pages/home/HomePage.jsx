@@ -51,19 +51,14 @@ class HomePage extends Component {
         this.props.history.push(`/feed/${id}`);
     }
 
-    handleDrawerOpen = () => {
-        this.setState(prevState => ({ isDrawerOpen: !prevState.isDrawerOpen }));
-        console.log('Drawer opened');
-    };
-    
     render() {
-        const { activeTab } = this.props;
-        const { posts, isLoading, isDrawerOpen } = this.state;
+        const { activeTab, isDrawerOpen, handleDrawer } = this.props;
+        const { posts, isLoading } = this.state;
 
         return (
             <React.Fragment>
                 <section className="section__content section__content--articles">
-                    <FilterPanel isDrawerOpen={isDrawerOpen} />
+                    <FilterPanel isDrawerOpen={isDrawerOpen} handleDrawer={handleDrawer} />
                     <p onClick={this.handleDrawerOpen}>Click me</p>
                     {
                         isLoading ? <Spinner /> : <PostsList posts={posts} onReadMore={this.goToPostDetailPage} activeTab={activeTab}/>

@@ -27,7 +27,7 @@ const styles = theme => ({
 });
 
 function TopNav(props) {
-    const { classes, backBar, history, onLogOut, onDrawerClick } = props;
+    const { classes, backBar, history, onLogOut, handleDrawer } = props;
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     function handleMenu(event) {
@@ -61,7 +61,7 @@ function TopNav(props) {
                         aria-label="Filter of posts"
                         aria-controls="menu-appbar"
                         aria-haspopup="true"
-                        onClick={handleMenu}
+                        onClick={handleDrawer}
                         color="inherit"
                     >
                         <FilterIcon />
