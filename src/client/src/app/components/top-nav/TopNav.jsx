@@ -23,7 +23,7 @@ const styles = theme => ({
     colorDefault: {
         backgroundColor: '#FF5555',
         boxShadow: 'none'
-    }
+    },
 });
 
 function TopNav(props) {

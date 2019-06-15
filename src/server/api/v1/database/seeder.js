@@ -122,6 +122,7 @@ class Seeder {
             title,
             synopsis,
             body,
+            price: Math.floor(Math.random() * 20),
             user: this.getRandomUser(),
             type: this.getRandomPostType(),
             category: this.getRandomCategory(),
@@ -152,7 +153,6 @@ class Seeder {
             localProvider: {
                 password,
             },
-            comments: [this.getRandomComment(), this.getRandomComment()]
         };
         const user = new User(userDetail);
 
@@ -193,10 +193,10 @@ class Seeder {
 
     createCategories = async () => {
         await Promise.all([
-            (async () => this.categoryCreate(faker.lorem.word(), faker.lorem.sentence()))(),
-            (async () => this.categoryCreate(faker.lorem.word(), faker.lorem.sentence()))(),
-            (async () => this.categoryCreate(faker.lorem.word(), faker.lorem.sentence()))(),
-            (async () => this.categoryCreate(faker.lorem.word(), faker.lorem.sentence()))(),
+            (async () => this.categoryCreate('Vegan', faker.lorem.sentence()))(),
+            (async () => this.categoryCreate('Meat', faker.lorem.sentence()))(),
+            (async () => this.categoryCreate('Fish', faker.lorem.sentence()))(),
+            (async () => this.categoryCreate('Breakfast', faker.lorem.sentence()))(),
         ]);
     }
 

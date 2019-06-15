@@ -41,7 +41,7 @@ const UserSchema = new Schema(
                 required: false,
             }
         },
-        comments: [{ type: Schema.Types.ObjectId, ref: 'Comment', required: false, unique: true }],
+        comments: [{ type: Schema.Types.ObjectId, ref: 'Comment', required: false }],
         localProvider: {
             password: {
                 type: String,

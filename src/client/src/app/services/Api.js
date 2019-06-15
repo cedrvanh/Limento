@@ -42,6 +42,25 @@ class Api {
         await instance.post(`${url}`, post);
     }
 
+    static updatePost = async (id, updatedPost) => {
+        let url = `${this.URL}/posts/${id}`;
+        await instance.put(url, updatedPost);
+    }
+
+    static deletePost = async (id) => {
+        let url = `${this.URL}/posts/${id}`;
+        await instance.delete(url);
+    }
+
+    static findAllCategories = async (queryParams=null) => {
+        let url = `${this.URL}/categories`;
+        if (queryParams !== null) {
+            url += (url.indexOf('?') === -1 ? '?' : '&') + this.queryParams(queryParams);
+        }   
+        const response = await instance.get(`${url}`);
+        return await response.data;
+    }
+
     static findAllPostTypes = async (queryParams=null) => {
         let url = `${this.URL}/types`;
         if (queryParams !== null) {

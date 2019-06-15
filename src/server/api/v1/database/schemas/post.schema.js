@@ -12,6 +12,7 @@ const PostSchema = new Schema(
         slug: {
             type: String, lowercase: true, unique: true, required: true,
         },
+        price: { type: Number, required: false },
         published_at: { type: Date, required: false },
         deleted_at: { type: Date, required: false },
         media: { type: Schema.Types.ObjectId, ref: 'Media', required: false },

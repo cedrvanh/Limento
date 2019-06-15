@@ -29,7 +29,7 @@ class PostCardProfile extends Component {
         return (
             <React.Fragment>
                 <article className="card--profile">
-                    <img className="card--profile__thumbnail" src={ post.media.path } />
+                    { post.media && <img className="card--profile__thumbnail" src={ post.media.path } /> }
                     <section className="card--profile__content">
                         <Title type={5}>{ post.title }</Title>
                     </section>

@@ -10,10 +10,9 @@ class CommentList extends Component {
         return (
             
             <List>
-                { console.log(user.comments == null) }
-                {/* {user && user.comments.map((comment, index) => (
+                {user && user.comments.map((comment, index) => (
                     <CommentItem key={ comment.id } comment={ comment } />
-                ))} */}
+                ))}
             </List>
         )
     }

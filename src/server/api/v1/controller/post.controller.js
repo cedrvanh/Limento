@@ -48,7 +48,12 @@ class PostController {
     show = async (req, res, next) => {
         try {
             const { id } = req.params;
-            const item = await Post.findById(id).populate('category').populate('user').exec();
+            const item = await Post.findById(id)
+            .populate('category')
+            .populate('user')
+            .populate('type')
+            .populate('tags')
+            .populate('media').exec();
             if (item === undefined || item === null) {
                 throw new APIError(404, `Post with id: ${id} not found!`);
             }

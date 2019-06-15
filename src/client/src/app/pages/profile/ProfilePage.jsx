@@ -76,7 +76,7 @@ class ProfilePage extends Component {
     } 
 
     onDeletePost = (id) => {
-        console.log(`Deleted post with id: ${id}`);
+        Api.deletePost(id);
     }
 
     isOnOwnProfile = () => {
@@ -98,7 +98,7 @@ class ProfilePage extends Component {
                 <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae sunt molestias in odio quisquam rem architecto voluptatem non, velit illum distinctio earum dicta aspernatur enim doloremque culpa corrupti ea? Iste.
                 </p>
-                {   this.isOnOwnProfile() ?
+                {   this.isOnOwnProfile() &&
                     <React.Fragment>
                         <Title type={4}>Overview offers</Title>
                         <Divider />
@@ -107,8 +107,10 @@ class ProfilePage extends Component {
                                 <PostCardProfile key={ post.id } post={ post } onEditHandler={this.goToEditPage} onDeleteHandler={this.onDeletePost} />
                             ))
                         }
-                    </React.Fragment> : null
+                    </React.Fragment>
                 }
+                {
+                    !this.isOnOwnProfile() &&
                     <React.Fragment>
                         <Divider />
                         <Title type={4}>Comments</Title>
@@ -121,6 +123,7 @@ class ProfilePage extends Component {
                         />
                         <CommentList user={ user } />
                     </React.Fragment>
+                }
             </React.Fragment>
         )
     }

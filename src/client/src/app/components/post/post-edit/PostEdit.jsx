@@ -6,19 +6,31 @@ import { withRouter } from 'react-router-dom';
 import Parser from 'html-react-parser';
 import classNames from 'classnames';
 
-import UserInfo from '../../user-info';
-import Title from '../../base/title';
+import TextInput from '../../base/text-input';
+import { Button } from '@material-ui/core';
 
 class PostEdit extends Component {
-    render() {
-        const { data: post } = this.props;
-        const IMAGE_PATH = 'https://images.unsplash.com/photo-1498837167922-ddd27525d352?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80';
+    
+    onSubmit = (e) => {
+        e.preventDefault();
 
+        this.props.handleUpdate();
+    }
+
+    render() {
+        const { data: post, handleChange } = this.props;
         return (
             <React.Fragment>
-                <p>Test</p>
-            </React.Fragment>
+                {/* <img className="card__thumbnail" alt='Post thumbnail' src={ post.media.path } /> */}
+                <TextInput type={'text'} id='title' value={ this.props.title } onChange={handleChange} />
+                <TextInput type={'text'} id='synopsis'value={ this.props.synopsis } onChange={handleChange} />
+                <TextInput type={'number'} id='price' value={ this.props.price ? this.props.price : 0 } onChange={handleChange} />
+                <Button variant="contained" color="secondary" fullWidth onClick={this.onSubmit}>
+                    Update post
+                </Button>
+            </React.Fragment>            
         );
+
     }
 }
 
