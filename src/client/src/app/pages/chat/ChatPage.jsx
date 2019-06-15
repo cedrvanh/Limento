@@ -3,11 +3,13 @@ Import extenal libraries
 */
 import React, { Component } from 'react';
 
+import ConversationList from '../../components/conversation-list';
+
 class ChatPage extends Component {
     render() {
         return (
             <React.Fragment>
-                <h1>Chat</h1>
+                <ConversationList />
             </React.Fragment>
         )
     }

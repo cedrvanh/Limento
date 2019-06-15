@@ -43,7 +43,6 @@ class Main extends Component {
         <Switch>
           <RouteWithLayout exact path='/' layout={ PageLayout } component={ HomePage }/>
           <Redirect from="/home" to="/"/>
-          <RouteWithLayout exact path='/feed' layout={ PageLayout } component={ NewsPage }/>
           <RouteWithLayout exact path='/feed/create' layout={ PageWithoutBottomLayout } component={ PostCreatePage }/>
           <RouteWithLayout exact path='/feed/:id' layout={ PageWithoutBottomLayout } component={ PostDetailPage }/>
           <RouteWithLayout exact path='/feed/:id/edit' layout={ PageWithoutBottomLayout } component={ PostEditPage }/>
