@@ -14,7 +14,7 @@ class CommentController {
                 };
                 comments = await Comment.paginate({}, options);
             } else {
-                comments = await Comment.find().sort({ created_at: -1 }).exec();
+                comments = await Comment.find().populate('author', 'name avatar').sort({ created_at: -1 }).exec();
             }
 
             if (comments === undefined || comments === null) {
@@ -51,13 +51,13 @@ class CommentController {
     // Store / Create the new model
     store = async (req, res, next) => {
         try {
-            const CommentCreate = new Comment({
-                title: req.body.title,
-                synopsis: req.body.synopsis,
-                body: req.body.body,
+            const commentCreate = new Comment({
+                author: req.body.author,
+                rating: req.body.rating,
+                body: req.body.body
             });
-            const Comment = await CommentCreate.save();
-            return res.status(201).json(Comment);
+            const comment = await commentCreate.save();
+            return res.status(201).json(comment);
         } catch (err) {
             return handleAPIError(err.status || 500, err.message || 'Some error occurred while saving the Comment!', next);
         }

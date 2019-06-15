@@ -26,7 +26,7 @@ class PostsLists extends Component {
 
         return (
             <React.Fragment>
-                {filteredPosts.map((post, index) => (
+                {filteredPosts && filteredPosts.map((post, index) => (
                     <PostCard key={ post.id } post={ post } onReadMore={onReadMore}/>
                 ))}
             </React.Fragment>

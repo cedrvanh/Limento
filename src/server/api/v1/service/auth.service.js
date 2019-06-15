@@ -4,6 +4,7 @@ Import external libraries
 import passport from 'passport';
 import * as passportLocal from 'passport-local';
 import passportJWT from 'passport-jwt';
+import passportFacebook from 'passport-facebook';
 
 /*
 Import internal libraries
@@ -15,12 +16,14 @@ import config from '../../../config';
 Constants
 */
 const LocalStrategy = passportLocal.Strategy;
+const FacebookStrategy = passportFacebook.Strategy;
 const { ExtractJwt, Strategy: JwtStrategy } = passportJWT;
 
 class AuthService {
     constructor() {
         this.initializeLocalStrategy();
         this.initializeJwtStrategy();
+        this.initializeFbStrategy();
         passport.serializeUser((user, done) => {
             done(null, user);
         });
@@ -74,6 +77,22 @@ class AuthService {
             },
         ));
     }
+
+    initializeFbStrategy = () => {
+        passport.use(new FacebookStrategy(
+            {
+                clientID: config.auth.facebook.clientID,
+                clientSecret: config.auth.facebook.clientSecret,
+                callbackURL: '/login/facebook/callback'
+            },
+            async (accessToken, refreshToken, profile, done) => {
+                console.log(accessToken);
+                console.log(refreshToken);
+                console.log(profile);
+            }
+        ))
+    }
+
 }
 
 export default AuthService;

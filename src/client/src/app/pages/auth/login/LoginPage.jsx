@@ -86,6 +86,11 @@ class LoginPage extends Component {
     this.onLogin();
   }
 
+  handleFbSubmit = (e) => {
+    e.preventDefault();
+    this.props.history.push('/login/facebook');
+  }
+
   onLogin = () => {
     const user = {
       email: this.state.email,
@@ -123,11 +128,21 @@ class LoginPage extends Component {
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
+            color="secondary"
             className={classes.submit}
             onClick={this.handleSubmit}
           >
             Sign in
+          </Button>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            color="primary"
+            className={classes.submit}
+            onClick={this.handleFbSubmit}
+          >
+            Sign in with Facebook
           </Button>
         </form>
       </React.Fragment>

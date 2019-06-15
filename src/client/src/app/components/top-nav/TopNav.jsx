@@ -27,7 +27,7 @@ const styles = theme => ({
 });
 
 function TopNav(props) {
-    const { classes, backBar, history } = props;
+    const { classes, backBar, history, onLogOut, onDrawerClick } = props;
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     function handleMenu(event) {
@@ -70,7 +70,7 @@ function TopNav(props) {
                         aria-label="User actions"
                         aria-controls="menu-appbar"
                         aria-haspopup="true"
-                        onClick={handleMenu}
+                        onClick={onLogOut}
                         color="inherit"
                     >
                         <MoreIcon />

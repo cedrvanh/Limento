@@ -57,6 +57,12 @@ class UserController {
                 populate: {
                     path: 'category',
                 }
+            }).populate({
+                path: 'comments',
+                populate: {
+                    path: 'author',
+                    select: 'name avatar'
+                }
             }).exec();
             if (item === undefined || item === null) {
                 throw new APIError(404, `User with id: ${id} not found!`);

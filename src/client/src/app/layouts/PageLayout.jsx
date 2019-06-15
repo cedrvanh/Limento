@@ -29,6 +29,10 @@ class PageLayout extends React.Component {
         });
     };
 
+    onLogOut = () => {
+        this.props.history.push('/logout');
+    }
+
     render() {
         const { children, classes } = this.props;
         const { activeTab, uid } = this.state;
@@ -41,7 +45,7 @@ class PageLayout extends React.Component {
         return (
             <div className="page">
                 <header role="header">
-                    <TopNav />
+                    <TopNav onLogOut={this.onLogOut} />
                     {
                         this.isPath('/') ? <TabList activeTab={activeTab} onTabChange={this.onTabChange} /> : null
                     }

@@ -12,13 +12,14 @@ Import internal libraries
 import { Api } from '../../services';
 import { PostsList } from '../../components/post';
 import Spinner from '../../components/base/spinner';
+import FilterPanel from '../../components/filter-panel';
 
 class HomePage extends Component {
     _isMounted = false;
     
     state = {
           posts: [],
-          isLoading: true
+          isLoading: true,
     };
 
     componentWillMount() {
@@ -50,13 +51,20 @@ class HomePage extends Component {
         this.props.history.push(`/feed/${id}`);
     }
 
+    handleDrawerOpen = () => {
+        this.setState(prevState => ({ isDrawerOpen: !prevState.isDrawerOpen }));
+        console.log('Drawer opened');
+    };
+    
     render() {
         const { activeTab } = this.props;
-        const { posts, isLoading } = this.state;
+        const { posts, isLoading, isDrawerOpen } = this.state;
 
         return (
             <React.Fragment>
                 <section className="section__content section__content--articles">
+                    <FilterPanel isDrawerOpen={isDrawerOpen} />
+                    <p onClick={this.handleDrawerOpen}>Click me</p>
                     {
                         isLoading ? <Spinner /> : <PostsList posts={posts} onReadMore={this.goToPostDetailPage} activeTab={activeTab}/>
                     } 

@@ -5,12 +5,18 @@ const { Schema } = mongoose;
 
 const CommentSchema = new Schema(
     {
-        body: { type: String, required: true, max: 512 },
         author: { 
             type: Schema.Types.ObjectId, 
-            ref: 'User', 
+            ref: 'User',
             required: true 
         },
+        rating: {
+            type: Number,
+            min: 0,
+            max: 5,
+            required: true,
+        },
+        body: { type: String, required: true, max: 512 },
         published_at: { type: Date, required: false },
         deleted_at: { type: Date, required: false },
     },
@@ -24,12 +30,6 @@ const CommentSchema = new Schema(
 );
 
 CommentSchema.virtual('id').get(function () { return this._id; });
-CommentSchema.virtual('user', {
-    ref: 'User',
-    localField: 'author',
-    foreignField: '_id',
-    justOne: true,
-});
 
 CommentSchema.plugin(mongoosePaginate);
 export default mongoose.model('Comment', CommentSchema);

@@ -14,6 +14,15 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { Divider } from '@material-ui/core';
 
 class PostCardProfile extends Component {
+
+    onEditHandler = (id) => {
+        this.props.onEditHandler(id);
+    }
+
+    onDeleteHandler = (id) => {
+        this.props.onDeleteHandler(id);
+    }
+    
     render() {
         const { post } = this.props;
 
@@ -27,12 +36,12 @@ class PostCardProfile extends Component {
                     <section className="card--profile__meta">
                         <Tooltip title="Edit">
                             <IconButton aria-label="Edit">
-                                <EditIcon />
+                                <EditIcon onClick={() => this.onEditHandler(post.id)} />
                             </IconButton>
                         </Tooltip>
                         <Tooltip title="Delete">
                             <IconButton aria-label="Delete">
-                                <DeleteIcon />
+                                <DeleteIcon onClick={() => this.onDeleteHandler(post.id)} />
                             </IconButton>
                         </Tooltip>
                     </section>

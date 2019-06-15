@@ -60,9 +60,20 @@ class Api {
         return await response.data;
     }
 
+    static createComment = async (comment) => {
+        let url = `${this.URL}/comments`;
+        const response = await instance.post(`${url}`, comment);
+        return await response.data;
+    }
+
     static findOneUser = async (id) => {
         const response = await instance.get(`${this.URL}/users/${id}`);
         return await response.data;
+    }
+
+    static updateUser = async (id, updatedUser) => {
+        let url = `${this.URL}/users/${id}`;
+        await instance.put(url, updatedUser);
     }
 
     static queryParams = (params) => {

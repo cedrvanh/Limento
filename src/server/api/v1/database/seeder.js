@@ -13,12 +13,13 @@ Import the internal libraries:
 - User
 */
 import { logger } from '../../../utilities';
-import { Blog, Category, Post, User, Tag, PostType, Media } from './schemas';
+import { Blog, Category, Post, User, Tag, PostType, Media, Comment } from './schemas';
 
 class Seeder {
     constructor() {
         this.blogs = [];
         this.categories = [];
+        this.comments =  [];
         this.posts = [];
         this.users = [];
         this.tags = [];
@@ -79,6 +80,8 @@ class Seeder {
             logger.log({ level: 'info', message: `An error occurred when creating a tag: ${err}!` });
         }
     }
+
+    
 
     mediaCreate = async (path) => {
         const mediaDetail = {
@@ -148,7 +151,8 @@ class Seeder {
             },
             localProvider: {
                 password,
-            }
+            },
+            comments: [this.getRandomComment(), this.getRandomComment()]
         };
         const user = new User(userDetail);
 
@@ -162,6 +166,25 @@ class Seeder {
         }
     }
 
+    commentCreate = async (rating, body) => {
+        const commentDetail = {
+            author: this.getRandomUser(),
+            rating,
+            body
+        };
+        const comment = new Comment(commentDetail);
+
+        try {
+            const newComment = await comment.save();
+
+            this.comment.push(newComment);
+
+            logger.log({ level: 'info', message: `Comment created with id: ${newComment.id}!` });
+        } catch (err) {
+            logger.log({ level: 'info', message: `An error occurred when creating a comment: ${err}!` });
+        }
+    }
+    
     createBlogs = async () => {
         await Promise.all([
             (async () => this.blogCreate(faker.lorem.sentence(), faker.lorem.paragraph()))(),
@@ -193,6 +216,15 @@ class Seeder {
             (async () => this.userCreate('https://randomuser.me/api/portraits/men/50.jpg', faker.name.firstName() + ' ' + faker.name.lastName(), faker.internet.email(), faker.address.city(), faker.address.streetAddress(), 'wicked4u'))(),
             (async () => this.userCreate('https://randomuser.me/api/portraits/men/27.jpg', faker.name.firstName() + ' ' + faker.name.lastName(), faker.internet.email(), faker.address.city(), faker.address.streetAddress(), 'wicked4u'))(),
             (async () => this.userCreate('https://randomuser.me/api/portraits/men/34.jpg', 'John Doe', 'test@example.com', faker.address.city(), faker.address.streetAddress(), 'secret'))(),
+        ]);
+    }
+
+    createComments = async () => {
+        await Promise.all([
+            (async () => this.commentCreate(Math.floor(Math.random() * 5), faker.lorem.sentence()))(),
+            (async () => this.commentCreate(Math.floor(Math.random() * 5), faker.lorem.sentence()))(),
+            (async () => this.commentCreate(Math.floor(Math.random() * 5), faker.lorem.sentence()))(),
+            (async () => this.commentCreate(Math.floor(Math.random() * 5), faker.lorem.sentence()))(),
         ]);
     }
 
@@ -248,6 +280,14 @@ class Seeder {
             singleMedia = this.media[Math.round(Math.random() * (this.media.length - 1))];
         }
         return singleMedia;
+    }
+
+    getRandomComment = () => {
+        let singleComment = null;
+        if (this.comments && this.comments.length > 0) {
+            singleComment = this.comments[Math.round(Math.random() * (this.comments.length - 1))];
+        }
+        return singleComment;
     }
 
     getRandomUser = () => {
@@ -306,6 +346,13 @@ class Seeder {
             }
             return User.find().exec();
         });  
+
+        this.comments = await Comment.estimatedDocumentCount().exec().then(async (count) => {
+            if (count === 0) {
+                await this.createComments();
+            }
+            return Comment.find().exec();
+        });
 
         this.postTypes = await PostType.estimatedDocumentCount().exec().then(async (count) => {
             if (count === 0) {

@@ -2,6 +2,8 @@
 Import external libraries
 */
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
+
 import classNames from 'classnames';
 
 import Title from '../../base/title';
@@ -24,7 +26,9 @@ class PostCard extends Component {
         return (
             <React.Fragment>
                 <article className="card">
-                    <UserInfo user={ post.user } />
+                    <Link to={`/profile/${ post.user.id }`} style={{ textDecoration: 'none' }}>
+                        <UserInfo user={ post.user } />
+                    </Link>
                     <img className="card__thumbnail" src={ post.media.path } />
                     <section className="card__content">
                         <Title type={4} style={{ margin: '8px 0' }}>{ post.title }</Title>

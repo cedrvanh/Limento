@@ -27,7 +27,6 @@ class PostDetail extends Component {
         return (
             <React.Fragment>
                 <article key={ post.id } className={classNames("post--large")}>
-                    <span onClick={this.goBack}>Back</span>
                     <UserInfo user={ post.user } />
                     
                     <img className="card__thumbnail" alt='Post thumbnail' src={ IMAGE_PATH } />
