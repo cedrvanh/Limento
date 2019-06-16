@@ -75,5 +75,7 @@ PostSchema.virtual('media', {
 });
 */
 
+PostSchema.index({ title: "text" });
+
 PostSchema.plugin(mongoosePaginate);
 export default mongoose.model('Post', PostSchema);

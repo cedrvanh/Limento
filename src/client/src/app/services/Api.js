@@ -26,6 +26,7 @@ class Api {
         let url = `${this.URL}/posts`;
         if (queryParams !== null) {
             url += (url.indexOf('?') === -1 ? '?' : '&') + this.queryParams(queryParams);
+            console.log(`URL with Params: ${url}`);
         }   
         const response = await instance.get(`${url}`);
         return await response.data;

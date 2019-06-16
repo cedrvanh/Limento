@@ -15,7 +15,8 @@ class PostController {
     // List all the models
     index = async (req, res, next) => {
         try {
-            const { limit, skip } = req.query;
+            const { limit, skip, search } = req.query;
+            
             let posts = null;
             if (limit && skip) {
                 const options = {
@@ -25,10 +26,22 @@ class PostController {
                     sort: { created_at: -1 },
                 };
                 posts = await Post.paginate({}, options);
-            } else {
+            } else if (search){
+                posts = await Post.find({
+                    $text: {
+                        $search: search,
+                    } 
+                })
+                .populate('category')
+                .populate('user', 'avatar name address')
+                .populate('type', 'name')
+                .populate('tags', 'name')
+                .populate('media')
+            }
+            else {
                 posts = await Post.find()
                 .populate('category')
-                .populate('user', 'avatar name')
+                .populate('user', 'avatar name address')
                 .populate('type', 'name')
                 .populate('tags', 'name')
                 .populate('media')

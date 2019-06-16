@@ -19,16 +19,21 @@ class PostsLists extends Component {
     } 
 
     render() {
-        const { posts, onReadMore } = this.props;
+        const { posts, onReadMore, query } = this.props;
         
         // Filter out Authenticated user posts & selected Post Type
         const filteredPosts = posts.filter((post) => post.type.name === this.setPostType() && post.user.id !== Auth.getCurrentUID());
 
         return (
             <React.Fragment>
-                {filteredPosts && filteredPosts.map((post, index) => (
+                {   query ? posts.map((post, index) => (
                     <PostCard key={ post.id } post={ post } onReadMore={onReadMore}/>
-                ))}
+                )) :
+                
+                filteredPosts && filteredPosts.map((post, index) => (
+                    <PostCard key={ post.id } post={ post } onReadMore={onReadMore}/>
+                ))
+                }
             </React.Fragment>
         );
     }
