@@ -6,8 +6,7 @@ Import styling
 import logo from '../assets/images/logo.svg';
 import './Page.scss';
 
-import Grid from '@material-ui/core/Grid';
-
+import Media from 'react-media';
 import TopNav from '../components/top-nav';
 import BottomNav from '../components/bottom-nav';
 import TabList from '../components/tab-list';
@@ -16,7 +15,7 @@ import { Auth } from '../services';
 class PageLayout extends React.Component {
     state = {
         activeTab: 0,
-        isDrawerOpen: true,
+        isDrawerOpen: false,
         uid: Auth.getCurrentUID()
     }
 
@@ -50,7 +49,16 @@ class PageLayout extends React.Component {
         return (
             <div className="page">
                 <header role="header">
-                    <TopNav onLogOut={this.onLogOut} handleDrawer={this.handleDrawer} />
+                    <Media query="(max-width: 750px)">
+                        {matches =>
+                            matches ? (
+                                <TopNav onLogOut={this.onLogOut} handleDrawer={this.handleDrawer} />
+                            ) : (
+                                <TopNav onLogOut={this.onLogOut} handleDrawer={this.handleDrawer} desktop uid={uid} />
+                            )
+                        }
+                    </Media>  
+                    
                     {
                         this.isPath('/') ? <TabList activeTab={activeTab} onTabChange={this.onTabChange} /> : null
                     }
@@ -61,7 +69,14 @@ class PageLayout extends React.Component {
                     </div>
                 </main>
                 <footer role="footer">
-                    <BottomNav uid={ uid } />
+                    <Media query="(max-width: 750px)">
+                        {matches =>
+                            matches ? (
+                                <BottomNav uid={ uid } />
+                                
+                            ) : null
+                        }
+                    </Media>   
                 </footer>
             </div>
         )

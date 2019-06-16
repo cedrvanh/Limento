@@ -6,6 +6,7 @@
 }
 
 .container {
+    max-width: 760px;
     padding: $container-spacing;
     margin-left: auto;
     margin-right: auto;
@@ -20,4 +21,65 @@
 .icon {
     width: 25px;
     height: 25px;
+}
+
+select {
+    background-color: white !important;
+}
+
+.nav-bar {
+    width: 100%;
+    height: 64px;
+    background-color: #FF5555;
+    display: flex;
+}
+
+.nav {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-grow: 1;
+    
+    &__link {
+        padding: 0 2rem;
+        list-style: none;
+        
+    }
+}
+
+.drawerPaper {
+    width: 75%;
+}
+
+.messages {
+    display: flex;
+    height: 75vh;
+}
+
+
+.about__img {
+    width: 100%;
+    border-radius: 7px;
+    object-fit: cover;
+    height: 200px;
+    margin-bottom: 1rem;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+}
+
+li {
+    list-style: none;
+}
+
+@media screen and (min-width: 760px) {
+    .page {
+        padding: 0;
+    }
+
+    .drawerPaper {
+        width: 25%;
+    }
 }

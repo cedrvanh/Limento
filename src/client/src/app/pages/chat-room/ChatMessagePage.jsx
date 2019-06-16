@@ -43,8 +43,12 @@ class ChatMessagePage extends Component {
                         messages: newMessageId
                     }
 
-                    Api.updateConversation(conversationId, updatedConversation);
+                    Api.updateConversation(conversationId, updatedConversation).then(res => {
+                        window.location.reload();
+                    });
                 });
+
+            this.setState({ message: '' });
         };
 
         this.sendMessage = () => {
@@ -53,9 +57,6 @@ class ChatMessagePage extends Component {
                 sender: this.state.uid,
                 body: this.state.message
             })
-
-            this.setState({ message: '' });
-
         }
     }
 
@@ -81,11 +82,10 @@ class ChatMessagePage extends Component {
             <React.Fragment>
                 { isLoading ? <Spinner /> : 
                     <React.Fragment>
-                        <p>Chat Message</p>
                         <div className="messages">
                             <List>
                                 {conversation && conversation.messages.map(message => (
-                                    <ListItem alignItems="flex-start">
+                                    <ListItem alignItems="flex-start" className="message">
                                         <ListItemAvatar>
                                             <Avatar alt={ message.sender.name } src={ message.sender.avatar } />
                                         </ListItemAvatar>
@@ -98,6 +98,7 @@ class ChatMessagePage extends Component {
                                     </ListItem>
                                 ))}
                             </List>
+                            
                         </div>
                         <ChatInput value={this.state.message} onChange={(e) => this.setState({ message: e.target.value })} onClick={this.sendMessage} />
                     </React.Fragment>

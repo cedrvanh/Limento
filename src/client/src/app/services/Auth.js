@@ -10,6 +10,12 @@ class Auth {
         return await response.data;
     }
 
+    static register = async (user) => {
+        let url = `${this.URL}/register`;
+        const response = await axios.post(`${url}`, user);
+        return await response.data;
+    }
+
     static logout = () => {
         localStorage.clear();
     }

@@ -26,14 +26,15 @@ class PostsLists extends Component {
 
         return (
             <React.Fragment>
-                {   query ? posts.map((post, index) => (
-                    <PostCard key={ post.id } post={ post } onReadMore={onReadMore}/>
-                )) :
-                
-                filteredPosts && filteredPosts.map((post, index) => (
-                    <PostCard key={ post.id } post={ post } onReadMore={onReadMore}/>
-                ))
-                }
+                <section className="cards">
+                    {query ? posts.filter((post) => post.user.id !== Auth.getCurrentUID()).map((post, index) => (
+                        <PostCard key={ post.id } post={ post } onReadMore={onReadMore}/>
+                    )) :
+                    
+                    filteredPosts && filteredPosts.map((post, index) => (
+                        <PostCard key={ post.id } post={ post } onReadMore={onReadMore}/>
+                    ))}
+                </section>
             </React.Fragment>
         );
     }

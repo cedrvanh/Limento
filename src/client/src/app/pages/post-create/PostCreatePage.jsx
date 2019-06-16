@@ -23,12 +23,12 @@ class PostCreatePage extends Component {
         types: [],
         categories: [],
         tags: [],
-        selectedType: null,
-        selectedCategory: null,
+        selectedType: '',
+        selectedCategory: '',
         selectedTags: [],
         title: '',
         synopsis: '',
-        price: null,
+        price: '',
     }
 
     async componentWillMount() {
@@ -43,7 +43,7 @@ class PostCreatePage extends Component {
                 this.setState({
                     types: res,
                 });
-            });
+            })      
     }
 
     loadCategories = () => {
@@ -76,7 +76,7 @@ class PostCreatePage extends Component {
        
         Api.createPost(post) 
             .then(res => {
-                console.log(`User: ${post.user} created a new post`);
+                this.props.history.push('/');
             })
     }
 
@@ -93,8 +93,6 @@ class PostCreatePage extends Component {
     } 
 
     handleChange = (e) => {
-        console.log(e.target.id);
-        console.log(e.target.value);
         this.setState({
             [e.target.id]: e.target.value
         });
@@ -109,6 +107,7 @@ class PostCreatePage extends Component {
                     isLoading ? <Spinner /> : 
                     <React.Fragment>
                         <Title type={1}>Create a new post</Title>
+            
                         <FormControl component="fieldset">
                             <RadioGroup
                             
@@ -118,30 +117,38 @@ class PostCreatePage extends Component {
                             onChange={this.handleChange}
                             >
                                 {types && types.map((type, index) => (
-                                    <FormControlLabel key={ type.id } value={ type.id } control={<Radio id="selectedType" />} label={ type.name } />
+                                    <FormControlLabel 
+                                    key={ type.id } 
+                                    value={ type.id } 
+                                    control={<Radio id="selectedType" />} 
+                                    label={ type.name } />
                                 ))}
                             </RadioGroup>
                         </FormControl>
 
                         <TextInput type={'text'} id='title' label="Title" value={this.state.title} onChange={(e) => this.handleChange(e)} />
-                        <TextInput type={'text'} id='synopsis' label="Synopsis" value={this.state.synopsis} onChange={(e) => this.handleChange(e)} />
-                        <TextInput type={'number'} id='price' label="Price" value={this.state.price} onChange={(e) => this.handleChange(e)} />
+                        <TextInput id='synopsis' label="Synopsis" value={this.state.synopsis} onChange={(e) => this.handleChange(e)} multiline rows={4} />
 
-                        <section class="category_wrapper">
-                            <SelectInput id="selectedCategory" onChange={this.handleChange}>
-                            <option value=''>Select a category</option>
-                                {categories && categories.map((category, index) => (
-                                    <option key={ category.id } value={ category.name }>{ category.name }</option>
-                                ))}
-                            </SelectInput>
-                        </section>
+                        { this.state.selectedType === this.state.types[1].id && (
+                            <React.Fragment>
+                                <TextInput type={'number'} id='price' label="Price" value={this.state.price} onChange={(e) => this.handleChange(e)} />
 
-                        <section class="tag__wrapper">
-                            {tags && tags.map((tag, index) => (
-                                <Tag key={ tag.id } label={ tag.name } value={ tag.id } onTagClick={this.onTagClick}/>
-                            ))}
-                        </section>
-                                        
+                                <section class="category_wrapper">
+                                    <SelectInput id="selectedCategory" onChange={this.handleChange}>
+                                    <option value=''>Select a category</option>
+                                        {categories && categories.map((category, index) => (
+                                            <option key={ category.id } value={ category.name }>{ category.name }</option>
+                                        ))}
+                                    </SelectInput>
+                                </section>
+
+                                <section class="tag__wrapper">
+                                    {tags && tags.map((tag, index) => (
+                                        <Tag key={ tag.id } label={ tag.name } value={ tag.id } onTagClick={this.onTagClick}/>
+                                    ))}
+                                </section>
+                            </React.Fragment>
+                        )}
                         <Button variant="contained" color="secondary" fullWidth onClick={this.onSubmit}>
                             Create post
                         </Button>

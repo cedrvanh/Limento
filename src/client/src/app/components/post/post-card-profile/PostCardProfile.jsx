@@ -29,7 +29,7 @@ class PostCardProfile extends Component {
         return (
             <React.Fragment>
                 <article className="card--profile">
-                    { post.media && <img className="card--profile__thumbnail" src={ post.media.path } /> }
+                    { post.media && <img className="card--profile__thumbnail" src={ post.media.path } /> }{post.media ? <img className="card--profile__thumbnail" alt={ post.title }src={ post.media.path } /> : <img className="card--profile__thumbnail" src='https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1050&q=80' />}
                     <section className="card--profile__content">
                         <Title type={5}>{ post.title }</Title>
                     </section>

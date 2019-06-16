@@ -176,14 +176,6 @@ class UsersTable extends Component {
                       component={Link} to={ `/admin/users/${user.id}/edit`}>
                       <IconCreate />
                     </IconButton>
-                    <IconButton
-                      onClick={() => this.handleDialogOpen(category.id, (category.deleted_at)?POSTACTIONSENUM.SOFTUNDELETE:POSTACTIONSENUM.SOFTDELETE)} style={{ opacity: ((category.deleted_at)?0.3:1) }}>
-                      <IconDelete/>
-                    </IconButton>
-                    <IconButton
-                      onClick={() => this.handleDialogOpen(category.id, POSTACTIONSENUM.DELETE)}>
-                      <IconDeleteForever />
-                    </IconButton>
                   </TableCell>
                 </TableRow>
               ))}

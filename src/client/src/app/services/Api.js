@@ -91,6 +91,12 @@ class Api {
         return await response.data;
     }
 
+    static createUser = async (user) => {
+        let url = `${this.URL}/users`;
+        const response = await axios.post(`${url}`, user);
+        return await response.data;
+    }
+
     static updateUser = async (id, updatedUser) => {
         let url = `${this.URL}/users/${id}`;
         await instance.put(url, updatedUser);
@@ -109,6 +115,13 @@ class Api {
         const response = await instance.get(`${this.URL}/conversations/${id}`);
         return await response.data;
     }
+
+    static createConversation = async (conversation) => {
+        let url = `${this.URL}/conversations`;
+        const response = await instance.post(`${url}`, conversation);
+        return await response.data;
+    }
+
 
     static updateConversation = async (id, updatedConversation) => {
         let url = `${this.URL}/conversations/${id}`;

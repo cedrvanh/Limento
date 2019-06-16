@@ -35,7 +35,6 @@ const categories = [
       { id: 'Messages', icon: <PeopleIcon />, link: '/admin/messages' },
       { id: 'PostTypes', icon: <PeopleIcon />, link: '/admin/types' },
       { id: 'Tags', icon: <PeopleIcon />, link: '/admin/Tags' },
-      { id: 'Users', icon: <PeopleIcon />, link: '/admin/users' },
     ],
   },
 ];

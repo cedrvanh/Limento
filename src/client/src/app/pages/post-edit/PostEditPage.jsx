@@ -6,13 +6,13 @@ import React, { Component } from 'react';
 /*
 Import internal libraries
 */
-import { Api } from '../../services';
-import { PostDetail } from '../../components/post';
+import { Api, Auth } from '../../services';
 import Spinner from '../../components/base/spinner';
 import PostEdit from '../../components/post/post-edit';
 
-class PostDetailPage extends Component {
+class PostEditPage extends Component {
     state = {
+        uid: Auth.getCurrentUID(),
         post: null,
         isLoading: true,
         title: '',
@@ -42,8 +42,7 @@ class PostDetailPage extends Component {
             })
             .catch((err) => {
                 console.log(err);
-            });
-        
+            });   
     }
 
     onUpdatePost = () => {
@@ -76,4 +75,4 @@ class PostDetailPage extends Component {
     }
 }
 
-export default (PostDetailPage);
+export default (PostEditPage);

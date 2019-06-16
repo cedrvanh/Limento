@@ -31,7 +31,6 @@ const styles = theme => ({
 const filters = [
     { name: 'Date', value: 'date', },
     { name: 'Price', value: 'price', },
-    { name: 'Distance', value: 'distance', },
 ]
 
 class FilterPanel extends Component {
@@ -79,7 +78,7 @@ class FilterPanel extends Component {
             variant="persistent"
             anchor="right"
             classes={{
-                paper: classes.drawerPaper,
+                paper: 'drawerPaper',
             }}
             open={isDrawerOpen}
             >

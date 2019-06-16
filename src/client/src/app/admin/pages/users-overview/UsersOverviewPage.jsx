@@ -13,7 +13,7 @@ import { ContentLayout } from '../../layouts';
 Pages
 */
 import UsersTablePage from '../users-table';
-import UserFormPage from '../User-form';
+import UserFormPage from '../user-form';
 
 const tabs = [
   { id: 'List', link: '/admin/users' },

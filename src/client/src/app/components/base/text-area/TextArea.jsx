@@ -4,7 +4,6 @@ import { withStyles } from '@material-ui/core/styles';
 
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
-import { FormControl } from '@material-ui/core';
 
 const styles = theme => ({
     root: {
@@ -23,15 +22,14 @@ const styles = theme => ({
     }
 });
 
-const TextInput = (props) => {
-    const { classes, label, onChange, ...other } = props; 
+const TextArea = (props) => {
+    const { classes, label, ...other } = props; 
 
     return (
         <Paper className={classes.root}>
             <InputBase
                 className={classes.input}
                 placeholder={label}
-                onChange={onChange}
                 inputProps={{ 'aria-label': label }}
                 {...other}
             />
@@ -39,4 +37,4 @@ const TextInput = (props) => {
     );
 }
 
-export default withStyles(styles)(TextInput);
+export default withStyles(styles)(TextArea);

@@ -57,7 +57,9 @@ class ProfilePage extends Component {
                 const updateUserWithComment = {
                     comments: comment.id
                 }
-                Api.updateUser(this.props.match.params.id, updateUserWithComment);
+                Api.updateUser(this.props.match.params.id, updateUserWithComment).then(res => {
+                    window.location.reload();
+                });
             });
     }
 
@@ -74,7 +76,9 @@ class ProfilePage extends Component {
     } 
 
     onDeletePost = (id) => {
-        Api.deletePost(id);
+        Api.deletePost(id).then(res => {
+            window.location.reload();
+        });;
     }
 
     isOnOwnProfile = () => {
@@ -96,9 +100,6 @@ class ProfilePage extends Component {
                 <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae sunt molestias in odio quisquam rem architecto voluptatem non, velit illum distinctio earum dicta aspernatur enim doloremque culpa corrupti ea? Iste.
                 </p>
-                {
-                    user.posts.length <= 0 && <p>Maak nieuwe posts aan</p>
-                }
                 {   this.isOnOwnProfile() && user.posts.length > 0 &&
                     <React.Fragment>
                         <Title type={4}>Overview offers</Title>

@@ -29,6 +29,7 @@ import Title from '../../../components/base/title';
 
 import { Auth } from '../../../services';
 import { setAuthToken } from '../../../utilities';
+import { Link } from '@material-ui/core';
  
 /*
 Styling
@@ -110,7 +111,7 @@ class LoginPage extends Component {
     
     return (
       <React.Fragment>
-        <Title type={1}>Sign Up</Title>
+        <Title type={1}>Log Up</Title>
         <form className={classes.form}>
           <FormControl margin="normal" required fullWidth>
             <InputLabel htmlFor="email">Email Address</InputLabel>
@@ -120,10 +121,6 @@ class LoginPage extends Component {
             <InputLabel htmlFor="password">Password</InputLabel>
             <Input name="password" type="password" id="password" value={this.state.password} onChange={this.handleChange} autoComplete="current-password" />
           </FormControl>
-          {/* <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          /> */}
           <Button
             type="submit"
             fullWidth
@@ -143,6 +140,17 @@ class LoginPage extends Component {
             onClick={this.handleFbSubmit}
           >
             Sign in with Facebook
+          </Button>
+          <Button
+            fullWidth
+            color="primary"
+            className={classes.submit}
+            onClick={(e) => { 
+              e.preventDefault();
+              this.props.history.push('/register')
+            }}
+          >
+            Register an account
           </Button>
         </form>
       </React.Fragment>

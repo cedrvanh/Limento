@@ -23,7 +23,7 @@ class PostEdit extends Component {
             <React.Fragment>
                 {/* <img className="card__thumbnail" alt='Post thumbnail' src={ post.media.path } /> */}
                 <TextInput type={'text'} id='title' value={ this.props.title } onChange={handleChange} />
-                <TextInput type={'text'} id='synopsis'value={ this.props.synopsis } onChange={handleChange} />
+                <TextInput type={'text'} id='synopsis'value={ this.props.synopsis } onChange={handleChange} multiline rows={4} />
                 <TextInput type={'number'} id='price' value={ this.props.price ? this.props.price : 0 } onChange={handleChange} />
                 <Button variant="contained" color="secondary" fullWidth onClick={this.onSubmit}>
                     Update post
