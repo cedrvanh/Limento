@@ -1,6 +1,7 @@
 import RouteWithLayout from './RouteWithLayout';
-import { setAuthToken } from './Helpers';
+import { setAuthToken, getLatLngFromAddress } from './Helpers';
 export {
   RouteWithLayout,
-  setAuthToken
+  setAuthToken,
+  getLatLngFromAddress
 }

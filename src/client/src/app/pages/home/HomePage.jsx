@@ -59,7 +59,6 @@ class HomePage extends Component {
             <React.Fragment>
                 <section className="section__content section__content--articles">
                     <FilterPanel isDrawerOpen={isDrawerOpen} handleDrawer={handleDrawer} />
-                    <p onClick={this.handleDrawerOpen}>Click me</p>
                     {
                         isLoading ? <Spinner /> : <PostsList posts={posts} onReadMore={this.goToPostDetailPage} activeTab={activeTab}/>
                     } 

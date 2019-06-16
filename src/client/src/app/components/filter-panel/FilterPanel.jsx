@@ -13,6 +13,8 @@ import IconButton from '@material-ui/core/IconButton';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import Title from '../base/title';
+import SelectInput from '../base/select-input';
+import { Api } from '../../services';
 
 const styles = theme => ({
     drawerPaper: {
@@ -27,9 +29,38 @@ const styles = theme => ({
 });
 
 class FilterPanel extends Component {
+    state = {
+        categories: [],
+        tags: [],
+    }
+
+    async componentDidMount() {
+        await this.loadCategories();
+        await this.loadTags();
+    }
+
+    loadCategories = () => {
+        Api.findAllCategories()
+            .then(res => {
+                this.setState({
+                    categories: res,
+                });
+            });
+    }
+    
+    loadTags = () => {
+        Api.findAllTags()
+            .then(res => {
+                this.setState({
+                    tags: res,
+                })
+            })
+    }
+
     render() {
         const { classes, isDrawerOpen, handleDrawer } = this.props;
-
+        const { categories, tags } = this.state;
+        
         return (
             
             <Drawer
@@ -53,12 +84,21 @@ class FilterPanel extends Component {
                 </List>
                 <Divider />
                 <List>
-                    {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                    <ListItem button key={text}>
-                        <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                        <ListItemText primary={text} />
+                    <ListItem>
+                        <SelectInput id="selectedCategory">
+                            {categories && categories.map((category, index) => (
+                                <option key={ category.id } value={ category.name }>{ category.name }</option>
+                            ))}
+                        </SelectInput>
                     </ListItem>
-                    ))}
+                    <ListItem>
+                        <SelectInput id="selectedTag">
+                            <Title type={4}>Tag</Title>
+                            {tags && tags.map((tag, index) => (
+                                <option key={ tag.id } value={ tag.name }>{ tag.name }</option>
+                            ))}
+                        </SelectInput>
+                    </ListItem>
                 </List>
             </Drawer>
         )

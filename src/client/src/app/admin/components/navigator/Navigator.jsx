@@ -28,9 +28,14 @@ const categories = [
   {
     id: 'Develop',
     children: [
-      { id: 'Blogs', icon: <PermMediaOutlinedIcon />, link: '/admin/blogs' },
+      { id: 'Posts', icon: <PermMediaOutlinedIcon />, link: '/admin/posts' },
       { id: 'Categories', icon: <DnsRoundedIcon />, link: '/admin/categories' },
-      { id: 'Posts', icon: <PeopleIcon />, link: '/admin/posts' },
+      { id: 'Conversations', icon: <PeopleIcon />, link: '/admin/conversations' },
+      { id: 'Media', icon: <PeopleIcon />, link: '/admin/media' },
+      { id: 'Messages', icon: <PeopleIcon />, link: '/admin/messages' },
+      { id: 'PostTypes', icon: <PeopleIcon />, link: '/admin/types' },
+      { id: 'Tags', icon: <PeopleIcon />, link: '/admin/Tags' },
+      { id: 'Users', icon: <PeopleIcon />, link: '/admin/users' },
     ],
   },
 ];
