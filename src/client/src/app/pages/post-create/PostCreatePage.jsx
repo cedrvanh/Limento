@@ -129,6 +129,7 @@ class PostCreatePage extends Component {
 
                         <section class="category_wrapper">
                             <SelectInput id="selectedCategory" onChange={this.handleChange}>
+                            <option value=''>Select a category</option>
                                 {categories && categories.map((category, index) => (
                                     <option key={ category.id } value={ category.name }>{ category.name }</option>
                                 ))}

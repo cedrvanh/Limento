@@ -27,7 +27,6 @@ const SelectInput = (props) => {
     return (
         <Paper className={classes.root}>
             <select {...other} className={classes.input}>
-                <option value=''></option>
                 { children }
             </select>
         </Paper>

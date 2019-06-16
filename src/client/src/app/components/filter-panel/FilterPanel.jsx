@@ -86,6 +86,7 @@ class FilterPanel extends Component {
                 <List>
                     <ListItem>
                         <SelectInput id="selectedCategory">
+                            <option value=''>Select a category</option>
                             {categories && categories.map((category, index) => (
                                 <option key={ category.id } value={ category.name }>{ category.name }</option>
                             ))}
@@ -93,7 +94,7 @@ class FilterPanel extends Component {
                     </ListItem>
                     <ListItem>
                         <SelectInput id="selectedTag">
-                            <Title type={4}>Tag</Title>
+                            <option value=''>Select a tag</option>
                             {tags && tags.map((tag, index) => (
                                 <option key={ tag.id } value={ tag.name }>{ tag.name }</option>
                             ))}
