@@ -96,7 +96,10 @@ class ProfilePage extends Component {
                 <p>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae sunt molestias in odio quisquam rem architecto voluptatem non, velit illum distinctio earum dicta aspernatur enim doloremque culpa corrupti ea? Iste.
                 </p>
-                {   this.isOnOwnProfile() &&
+                {
+                    user.posts.length <= 0 && <p>Maak nieuwe posts aan</p>
+                }
+                {   this.isOnOwnProfile() && user.posts.length > 0 &&
                     <React.Fragment>
                         <Title type={4}>Overview offers</Title>
                         <Divider />
