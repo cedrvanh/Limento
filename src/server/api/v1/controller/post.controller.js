@@ -18,6 +18,8 @@ class PostController {
             const { limit, skip, search } = req.query;
             
             let posts = null;
+            let query = null;
+
             if (limit && skip) {
                 const options = {
                     page: parseInt(skip, 10) || 1,
@@ -26,27 +28,23 @@ class PostController {
                     sort: { created_at: -1 },
                 };
                 posts = await Post.paginate({}, options);
-            } else if (search){
-                posts = await Post.find({
-                    $text: {
-                        $search: search,
-                    } 
-                })
-                .populate('category')
-                .populate('user', 'avatar name address')
-                .populate('type', 'name')
-                .populate('tags', 'name')
-                .populate('media')
+            } 
+            
+            if (search){
+                query = {
+                    title: {
+                        $regex: search
+                    }
+                }
             }
-            else {
-                posts = await Post.find()
+            
+            posts = await Post.find(query)
                 .populate('category')
                 .populate('user', 'avatar name address')
                 .populate('type', 'name')
                 .populate('tags', 'name')
                 .populate('media')
                 .sort({ created_at: -1 }).exec();
-            }
 
             if (posts === undefined || posts === null) {
                 throw new APIError(404, 'Collection for posts not found!');
