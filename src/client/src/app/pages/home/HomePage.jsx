@@ -4,8 +4,6 @@ Import extenal libraries
 */
 import React, { Component } from 'react';
 
-import Grid from '@material-ui/core/Grid';
-
 /*
 Import internal libraries
 */
@@ -14,6 +12,7 @@ import { PostsList } from '../../components/post';
 import Spinner from '../../components/base/spinner';
 import FilterPanel from '../../components/filter-panel';
 import SearchInput from '../../components/search-input';
+import { filterNullFromObj } from '../../utilities';
 
 class HomePage extends Component {
     _isMounted = false;
@@ -22,6 +21,12 @@ class HomePage extends Component {
           posts: [],
           isLoading: true,
           queried: false,
+
+          filters: {
+            selectedCategory: '',
+            selectedTag: '',
+            selectedSort: ''
+        }
     };
 
     componentWillMount() {
@@ -59,7 +64,34 @@ class HomePage extends Component {
         })
     }
 
-    onSearchSubmit = (e) => {
+    onFilterChange = (e) => {        
+        const { filters } = {...this.state};
+        const currentState = filters;
+        const { id, value } = e.target;
+        currentState[id] = value;
+
+        this.setState({
+            filters: currentState
+        });
+    }
+
+    onFilterSubmit = () => {
+        const query = {
+            category: this.state.filters.selectedCategory || null,
+            tag: this.state.filters.selectedTag || null,
+            sort: this.state.filters.selectedSort || null,
+        }
+
+        filterNullFromObj(query);
+
+        this.setState({
+            queried: true,
+        });
+
+        this.loadPosts(query);
+    }
+
+    onSearchSubmit = () => {
         const query = {
             search: this.state.query
         }
@@ -73,12 +105,12 @@ class HomePage extends Component {
 
     render() {
         const { activeTab, isDrawerOpen, handleDrawer } = this.props;
-        const { posts, isLoading, query } = this.state;
+        const { posts, isLoading, query, filters } = this.state;
 
         return (
             <React.Fragment>
                 <section className="section__content section__content--articles">
-                    <FilterPanel isDrawerOpen={isDrawerOpen} handleDrawer={handleDrawer} />
+                    <FilterPanel isDrawerOpen={isDrawerOpen} filters={filters} handleDrawer={handleDrawer} handleFilterChange={this.onFilterChange} handleFilterSubmit={this.onFilterSubmit} />
                     {
                         isLoading ? <Spinner /> : (
                         <React.Fragment>

@@ -1,7 +1,8 @@
 import RouteWithLayout from './RouteWithLayout';
-import { setAuthToken, getLatLngFromAddress } from './Helpers';
+import { setAuthToken, getLatLngFromAddress, filterNullFromObj } from './Helpers';
 export {
   RouteWithLayout,
   setAuthToken,
-  getLatLngFromAddress
+  getLatLngFromAddress,
+  filterNullFromObj
 }

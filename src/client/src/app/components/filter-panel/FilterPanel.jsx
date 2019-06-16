@@ -28,6 +28,12 @@ const styles = theme => ({
     },
 });
 
+const filters = [
+    { name: 'Date', value: 'date', },
+    { name: 'Price', value: 'price', },
+    { name: 'Distance', value: 'distance', },
+]
+
 class FilterPanel extends Component {
     state = {
         categories: [],
@@ -57,8 +63,14 @@ class FilterPanel extends Component {
             })
     }
 
+    onClick = (e, filters) => {
+        e.preventDefault();
+
+        this.props.handleFilterSubmit(filters);
+    }
+
     render() {
-        const { classes, isDrawerOpen, handleDrawer } = this.props;
+        const { classes, isDrawerOpen, handleDrawer, handleFilterChange } = this.props;
         const { categories, tags } = this.state;
         
         return (
@@ -85,7 +97,7 @@ class FilterPanel extends Component {
                 <Divider />
                 <List>
                     <ListItem>
-                        <SelectInput id="selectedCategory">
+                        <SelectInput id="selectedCategory" onChange={handleFilterChange}>
                             <option value=''>Select a category</option>
                             {categories && categories.map((category, index) => (
                                 <option key={ category.id } value={ category.name }>{ category.name }</option>
@@ -93,7 +105,7 @@ class FilterPanel extends Component {
                         </SelectInput>
                     </ListItem>
                     <ListItem>
-                        <SelectInput id="selectedTag">
+                        <SelectInput id="selectedTag" onChange={handleFilterChange}>
                             <option value=''>Select a tag</option>
                             {tags && tags.map((tag, index) => (
                                 <option key={ tag.id } value={ tag.name }>{ tag.name }</option>
@@ -101,12 +113,24 @@ class FilterPanel extends Component {
                         </SelectInput>
                     </ListItem>
                     <ListItem>
-                        <SelectInput id="selectedSorting">
+                        <SelectInput id="selectedSort" onChange={handleFilterChange}>
                             <option value=''>Sort by</option>
-                            <option value=''>Date</option>
-                            <option value=''>Price</option>
-                            <option value=''>Distance</option>
+                            {filters && filters.map((filter, index) => (
+                                <option key={ index } value={ filter.value }>{ filter.name }</option>
+                            ))}
                         </SelectInput>
+                    </ListItem>
+                    <ListItem>
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            color="secondary"
+                            className={classes.submit}
+                            onClick={(e) => this.onClick(e, this.props.filters)}
+                        >
+                            Apply Filters
+                        </Button>
                     </ListItem>
                 </List>
             </Drawer>

@@ -16,7 +16,7 @@ import { Auth } from '../services';
 class PageLayout extends React.Component {
     state = {
         activeTab: 0,
-        isDrawerOpen: false,
+        isDrawerOpen: true,
         uid: Auth.getCurrentUID()
     }
 
