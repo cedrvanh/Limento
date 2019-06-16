@@ -67,7 +67,6 @@ const CommentInput = (props) => {
                     <SendIcon />
                 </IconButton>
             </Paper>
-        
         </React.Fragment>
     )
 }
