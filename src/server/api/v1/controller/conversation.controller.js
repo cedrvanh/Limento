@@ -8,45 +8,32 @@ Import the internal libraries:
 - * from database
 - errorHandler
 */
-import { Post } from '../database';
+import { Conversation } from '../database';
 import { APIError, handleAPIError } from '../../../utilities';
 
-class PostController {
+class ConversationController {
     // List all the models
     index = async (req, res, next) => {
         try {
-            const { limit, skip, search } = req.query;
+            const { limit, skip } = req.query;
             
             let posts = null;
-            let query = null;
 
             if (limit && skip) {
                 const options = {
                     page: parseInt(skip, 10) || 1,
                     limit: parseInt(limit, 10) || 10,
-                    populate:  ['category', 'user', 'type', 'media', 'tags'],
+                    populate:  'user',
                     sort: { created_at: -1 },
                 };
-                posts = await Post.paginate({}, options);
-            } 
-            
-            if (search){
-                query = {
-                    title: {
-                        $regex: search,
-                        $options: 'i'
-                    }
-                }
+                posts = await Conversation.paginate({}, options);
+            } else {
+                posts = await Conversation.find()
+                .populate('userOne', 'avatar name')
+                .populate('userTwo', 'avatar name')
+                .populate('messages')
+                    .sort({ created_at: -1 }).exec();
             }
-            
-            posts = await Post.find(query)
-                .populate('category')
-                .populate('user', 'avatar name address')
-                .populate('type', 'name')
-                .populate('tags', 'name')
-                .populate('media')
-                .sort({ created_at: -1 }).exec();
-
             if (posts === undefined || posts === null) {
                 throw new APIError(404, 'Collection for posts not found!');
             }
@@ -60,14 +47,18 @@ class PostController {
     show = async (req, res, next) => {
         try {
             const { id } = req.params;
-            const item = await Post.findById(id)
-            .populate('category')
-            .populate('user')
-            .populate('type')
-            .populate('tags')
-            .populate('media').exec();
+            const item = await Conversation.findById(id)
+            .populate('messages')
+            .populate({
+                path: 'messages',
+                populate: {
+                    path: 'sender',
+                    select: 'name avatar'
+                }
+            })
+            .populate('user').exec();
             if (item === undefined || item === null) {
-                throw new APIError(404, `Post with id: ${id} not found!`);
+                throw new APIError(404, `Conversation with id: ${id} not found!`);
             }
             return res.status(200).json(item);
         } catch (err) {
@@ -86,19 +77,16 @@ class PostController {
     // Store / Create the new model
     store = async (req, res, next) => {
         try {
-            const postCreate = new Post({
-                title: req.body.title,
-                synopsis: req.body.synopsis,
-                body: req.body.body,
-                category: req.body.categoryId,
-                type: req.body.type,
-                user: req.body.user,
-                tags: req.body.tags
+            console.log(req);
+            const postCreate = new Conversation({
+                userOne: req.body.userOne,
+                userTwo: req.body.userTwo,
+                messages: req.body.message
             });
             const post = await postCreate.save();
             return res.status(201).json(post);
         } catch (err) {
-            return handleAPIError(err.status || 500, err.message || 'Some error occurred while saving the Post!', next);
+            return handleAPIError(err.status || 500, err.message || 'Some error occurred while saving the Conversation!', next);
         }
     }
 
@@ -107,10 +95,10 @@ class PostController {
         const { id } = req.params;
 
         try {
-            const post = await Post.findById(id).exec();
+            const post = await Conversation.findById(id).exec();
 
             if (!post) {
-                throw new APIError(404, `Post with id: ${id} not found!`);
+                throw new APIError(404, `Conversation with id: ${id} not found!`);
             } else {
                 const vm = {
                     post,
@@ -119,7 +107,7 @@ class PostController {
                 return res.status(200).json(vm);
             }
         } catch (err) {
-            return handleAPIError(err.status || 500, err.message || `Some error occurred while deleting the Post with id: ${id}!`, next);
+            return handleAPIError(err.status || 500, err.message || `Some error occurred while deleting the Conversation with id: ${id}!`, next);
         }
     }
 
@@ -129,14 +117,15 @@ class PostController {
 
         try {
             const postUpdate = req.body;
-            const post = await Post.findOneAndUpdate({ _id: id }, postUpdate, { new: true }).exec();
+
+            const post = await Conversation.findOneAndUpdate({ _id: id },{ $push: { messages: postUpdate.messages }},{ new: true }).exec();
 
             if (!post) {
-                throw new APIError(404, `Post with id: ${id} not found!`);
+                throw new APIError(404, `Conversation with id: ${id} not found!`);
             }
             return res.status(200).json(post);
         } catch (err) {
-            return handleAPIError(err.status || 500, err.message || `Some error occurred while deleting the Post with id: ${id}!`, next);
+            return handleAPIError(err.status || 500, err.message || `Some error occurred while deleting the Conversation with id: ${id}!`, next);
         }
     }
 
@@ -149,21 +138,21 @@ class PostController {
 
             let { mode } = req.query;
             if (mode) {
-                post = await Post.findByIdAndUpdate({ _id: id }, { deleted_at: (mode === 'softdelete' ? Date.now() : null) }, { new: true });
+                post = await Conversation.findByIdAndUpdate({ _id: id }, { deleted_at: (mode === 'softdelete' ? Date.now() : null) }, { new: true });
             } else {
                 mode = 'delete';
-                post = await Post.findOneAndRemove({ _id: id });
+                post = await Conversation.findOneAndRemove({ _id: id });
             }
 
             if (!post) {
-                throw new APIError(404, `Post with id: ${id} not found!`);
+                throw new APIError(404, `Conversation with id: ${id} not found!`);
             } else {
-                return res.status(200).json({ message: `Successful deleted the Post with id: ${id}!`, post, mode });
+                return res.status(200).json({ message: `Successful deleted the Conversation with id: ${id}!`, post, mode });
             }
         } catch (err) {
-            return handleAPIError(err.status || 500, err.message || `Some error occurred while deleting the Post with id: ${id}!`, next);
+            return handleAPIError(err.status || 500, err.message || `Some error occurred while deleting the Conversation with id: ${id}!`, next);
         }
     }
 }
 
-export default PostController;
+export default ConversationController;

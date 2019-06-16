@@ -1,6 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 import Blog from './blog.schema';
 import Category from './category.schema';
+import Conversation from './conversation.schema';
 import Comment from './comment.schema';
 import Media from './media.schema';
 import Message from './message.schema';
@@ -12,6 +13,7 @@ import User from './user.schema';
 export {
     Blog,
     Category,
+    Conversation,
     Comment,
     Media,
     Message,

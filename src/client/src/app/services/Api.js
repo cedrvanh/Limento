@@ -96,6 +96,40 @@ class Api {
         await instance.put(url, updatedUser);
     }
 
+    static findAllConversations = async (queryParams=null) => {
+        let url = `${this.URL}/conversations`;
+        if (queryParams !== null) {
+            url += (url.indexOf('?') === -1 ? '?' : '&') + this.queryParams(queryParams);
+        }   
+        const response = await instance.get(`${url}`);
+        return await response.data;
+    }
+
+    static findOneConversation = async (id) => {
+        const response = await instance.get(`${this.URL}/conversations/${id}`);
+        return await response.data;
+    }
+
+    static updateConversation = async (id, updatedConversation) => {
+        let url = `${this.URL}/conversations/${id}`;
+        await instance.put(url, updatedConversation);
+    }
+
+    static findAllMessages = async (queryParams=null) => {
+        let url = `${this.URL}/messages`;
+        if (queryParams !== null) {
+            url += (url.indexOf('?') === -1 ? '?' : '&') + this.queryParams(queryParams);
+        }   
+        const response = await instance.get(`${url}`);
+        return await response.data;
+    }
+
+    static createMessage = async (message) => {
+        let url = `${this.URL}/messages`;
+        const response = await instance.post(`${url}`, message);
+        return await response.data;
+    }
+
     static queryParams = (params) => {
         return Object.keys(params)
             .map(k => encodeURIComponent(k) + '=' + encodeURIComponent(params[k]))

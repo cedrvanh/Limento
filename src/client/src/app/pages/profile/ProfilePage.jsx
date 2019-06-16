@@ -51,16 +51,14 @@ class ProfilePage extends Component {
             rating: this.state.selectedRating,
             body: this.state.comment,
         }
-        console.log('Comment submitted');
-        /*
+
         Api.createComment(newComment)
             .then(comment => {
                 const updateUserWithComment = {
                     comments: comment.id
                 }
-                Api.updateUser(updateUserWithComment);
+                Api.updateUser(this.props.match.params.id, updateUserWithComment);
             });
-        */
     }
 
     onChangeRating = (rating) => {

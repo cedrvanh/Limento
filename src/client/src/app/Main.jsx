@@ -27,6 +27,7 @@ import ProfilePage from './pages/profile';
 import PostCreatePage from './pages/post-create';
 import PostEditPage from './pages/post-edit';
 import ChatPage from './pages/chat';
+import ChatMessagePage from './pages/chat-room';
 import AboutPage from './pages/about';
 import NotFoundPage from './pages/404';
 
@@ -47,7 +48,8 @@ class Main extends Component {
           <RouteWithLayout exact path='/feed/:id' layout={ PageWithoutBottomLayout } component={ PostDetailPage }/>
           <RouteWithLayout exact path='/feed/:id/edit' layout={ PageWithoutBottomLayout } component={ PostEditPage }/>
           <RouteWithLayout exact path='/profile/:id' layout={ PageLayout } component={ ProfilePage }/>
-          <RouteWithLayout path='/chat' layout={ PageLayout } component={ ChatPage }/>
+          <RouteWithLayout exact path='/chat' layout={ PageLayout } component={ ChatPage }/>
+          <RouteWithLayout exact path='/chat/:id' layout={ PageWithoutBottomLayout } component={ ChatMessagePage }/>
           <RouteWithLayout path='/about' layout={ PageLayout } component={ AboutPage }/>
           <RouteWithLayout path="/login" layout={ LoginLayout } component={ LoginPage }></RouteWithLayout>
           <RouteWithLayout path="/register" layout={ LoginLayout } component={ RegisterPage }></RouteWithLayout>

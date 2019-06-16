@@ -123,8 +123,9 @@ class UserController {
         const { id } = req.params;
 
         try {
+            console.log(req.body);
             const postUpdate = req.body;
-            const user = await User.findOneAndUpdate({ _id: id }, postUpdate, { new: true }).exec();
+            const user = await User.findOneAndUpdate({ _id: id }, { $push: { comments: postUpdate.comments }}, { new: true }).exec();
 
             if (!user) {
                 throw new APIError(404, `User with id: ${id} not found!`);

@@ -5,19 +5,17 @@ const { Schema } = mongoose;
 
 const ConversationSchema = new Schema(
     {
-        userOneId: { 
-            type: Schema.Types.ObjectId, 
-            ref: 'User', 
-            required: true 
+        userOne: {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
         },
-        userTwoId: { 
-            type: Schema.Types.ObjectId, 
-            ref: 'User', 
-            required: true 
+        userTwo: {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
         },
         messages: [{
             type: Schema.Types.ObjectId,
-            ref: 'Messages'
+            ref: 'Message'
         }],
         published_at: { type: Date, required: false },
         deleted_at: { type: Date, required: false },
@@ -32,12 +30,6 @@ const ConversationSchema = new Schema(
 );
 
 ConversationSchema.virtual('id').get(function () { return this._id; });
-ConversationSchema.virtual('user', {
-    ref: 'User',
-    localField: 'author',
-    foreignField: '_id',
-    justOne: true,
-});
 
 ConversationSchema.plugin(mongoosePaginate);
 export default mongoose.model('Conversation', ConversationSchema);

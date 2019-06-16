@@ -5,12 +5,17 @@ const { Schema } = mongoose;
 
 const MessageSchema = new Schema(
     {
-        text: { type: String, required: true, max: 512 },
+        conversation: {
+            type: Schema.Types.ObjectId,
+            ref: 'Conversation',
+            required: true 
+        },
         sender: { 
             type: Schema.Types.ObjectId, 
             ref: 'User', 
             required: true 
         },
+        body: { type: String, required: true, max: 512 },
         published_at: { type: Date, required: false },
         deleted_at: { type: Date, required: false },
     },
@@ -24,12 +29,6 @@ const MessageSchema = new Schema(
 );
 
 MessageSchema.virtual('id').get(function () { return this._id; });
-MessageSchema.virtual('user', {
-    ref: 'User',
-    localField: 'author',
-    foreignField: '_id',
-    justOne: true,
-});
 
 MessageSchema.plugin(mongoosePaginate);
 export default mongoose.model('Message', MessageSchema);

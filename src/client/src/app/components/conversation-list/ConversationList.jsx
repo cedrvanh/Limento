@@ -4,15 +4,14 @@ import List from '@material-ui/core/List';
 import ConversationItem from '../conversation-item';
 
 
-const ConversationList = () => {
+const ConversationList = (props) => {
+    const { onConversationClick, conversations } = props;
+ 
     return (
         <List>
-            <ConversationItem />
-            <ConversationItem />
-            <ConversationItem />
-            <ConversationItem />
-            <ConversationItem />
-            <ConversationItem />
+            {conversations && conversations.map((conversation, index) => (
+                    <ConversationItem key={ conversation.id } conversation={ conversation } onConversationClick={onConversationClick}/>
+            ))}
         </List>
     )
 }

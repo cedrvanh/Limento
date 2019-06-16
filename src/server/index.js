@@ -31,6 +31,7 @@ import mongoose from 'mongoose';
 import swaggerJsdoc from 'swagger-jsdoc';
 import swaggerUi from 'swagger-ui-express';
 import passport from 'passport';
+import SocketIO from 'socket.io';
 
 /*
 Import internal libraries
@@ -148,11 +149,20 @@ app.use((error, req, res, next) => {
 
 // Create the http Node.js server
 const httpServer = http.Server(app);
+const io = new SocketIO(httpServer);
 
 // Launch the http server: ip and port
 httpServer.listen(config.nodePort, config.nodeHostname, () => {
     logger.log({ level: 'info', message: `Server is running at http://${config.nodeHostname}:${config.nodePort} !` });
 });
+
+io.on('connection', (socket) => {
+    console.log(socket.id);
+
+    socket.on('SEND_MESSAGE', (data) => {
+        io.emit('RECEIVE_MESSAGE', data);
+    })
+})
 
 if (config.nodeEnvironment === 'Development') {
     const seeder = new Seeder();

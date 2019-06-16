@@ -5,29 +5,27 @@ import Divider from '@material-ui/core/Divider';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
-import Typography from '@material-ui/core/Typography';
 
-const ConversationItem = () => {
+const ConversationItem = (props) => {
+    const { conversation } = props
+
+    function onConversationClick(e, id) {
+        e.preventDefault();
+        
+        if (typeof props.onConversationClick === 'function') {
+            props.onConversationClick(id);
+        }
+    }
+
     return (
         <React.Fragment>
-            <ListItem alignItems="flex-start">
-            <ListItemAvatar>
-                <Avatar alt="Remy Sharp" src="https://randomuser.me/api/portraits/women/10.jpg" />
-            </ListItemAvatar>
-            <ListItemText
-                secondary={
-                <React.Fragment>
-                    <Typography
-                    component="span"
-                    variant="body2"
-                    color="textPrimary"
-                    >
-                    Ali Connors
-                    </Typography>
-                    {" I'll be in your neighborhood doing errands this…"}
-                </React.Fragment>
-                }
-            />
+            <ListItem alignItems="flex-start" onClick={(e) => onConversationClick(e, conversation.id)}>
+                <ListItemAvatar>
+                    <Avatar alt={ conversation.userTwo.name } src={ conversation.userTwo.avatar } />
+                </ListItemAvatar>
+                <ListItemText
+                    primary={ conversation.userTwo.name } 
+                />
             </ListItem>
             <Divider variant="inset" component="li" />
         </React.Fragment>
