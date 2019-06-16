@@ -1,6 +1,5 @@
 /* eslint-disable import/prefer-default-export */
 import AuthController from './auth.controller';
-import BlogController from './blog.controller';
 import CategoryController from './category.controller';
 import ConversationController from './conversation.controller';
 import TagController from './tag.controller';
@@ -13,7 +12,6 @@ import MediaController from './media.controller';
 
 export {
     AuthController,
-    BlogController,
     CategoryController,
     ConversationController,
     TagController,

@@ -28,7 +28,7 @@ class AuthController {
     };
 
     register = async (req, res, next) => {
-        const { name, email, password } = req.body;
+        const { name, email, city, street, password } = req.body;
         
         const findUser = await User.findOne({ "email": email });
         if (findUser) {
@@ -38,6 +38,10 @@ class AuthController {
         const newUser = new User({
             name,
             email,
+            address: {
+                city,
+                street
+            },
             localProvider: {
                 password
             }

@@ -7,17 +7,15 @@ import faker from 'faker';
 /*
 Import the internal libraries:
 - logger
-- Blog
 - Category
 - Post
 - User
 */
 import { logger } from '../../../utilities';
-import { Blog, Category, Post, User, Tag, PostType, Media, Comment } from './schemas';
+import { Category, Post, User, Tag, PostType, Media, Comment } from './schemas';
 
 class Seeder {
     constructor() {
-        this.blogs = [];
         this.categories = [];
         this.comments =  [];
         this.posts = [];
@@ -25,25 +23,6 @@ class Seeder {
         this.tags = [];
         this.postTypes = [];
         this.media = [];
-    }
-
-    blogCreate = async (title, description) => {
-        const blogDetail = {
-            title,
-            description,
-            categoryId: this.getRandomCategory(),
-            posts: this.getRandomPosts(),
-        };
-        const blog = new Blog(blogDetail);
-
-        try {
-            const newblog = await blog.save();
-            this.blogs.push(newblog);
-
-            logger.log({ level: 'info', message: `Blog created with id: ${newblog.id}!` });
-        } catch (err) {
-            logger.log({ level: 'info', message: `An error occurred when creating a blog: ${err}!` });
-        }
     }
 
     categoryCreate = async (name, description) => {
@@ -185,12 +164,6 @@ class Seeder {
         }
     }
     
-    createBlogs = async () => {
-        await Promise.all([
-            (async () => this.blogCreate(faker.lorem.sentence(), faker.lorem.paragraph()))(),
-        ]);
-    }
-
     createCategories = async () => {
         await Promise.all([
             (async () => this.categoryCreate('Vegan', faker.lorem.sentence()))(),
@@ -347,13 +320,6 @@ class Seeder {
             return User.find().exec();
         });  
 
-        this.comments = await Comment.estimatedDocumentCount().exec().then(async (count) => {
-            if (count === 0) {
-                await this.createComments();
-            }
-            return Comment.find().exec();
-        });
-
         this.postTypes = await PostType.estimatedDocumentCount().exec().then(async (count) => {
             if (count === 0) {
                 await this.createPostTypes();
@@ -366,13 +332,6 @@ class Seeder {
                 await this.createPosts();
             }
             return Post.find().exec();
-        });
-
-        this.blogs = await Blog.estimatedDocumentCount().exec().then(async (count) => {
-            if (count === 0) {
-                await this.createBlogs();
-            }
-            return Blog.find().exec();
         });
     }
 }

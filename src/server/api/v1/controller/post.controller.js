@@ -12,13 +12,17 @@ import { Post } from '../database';
 import { APIError, handleAPIError } from '../../../utilities';
 
 class PostController {
+    /* TODO: Make Cleaner */
     // List all the models
     index = async (req, res, next) => {
         try {
-            const { limit, skip, search } = req.query;
+            const { limit, skip, search, category } = req.query;
             
-            let posts = null;
-            let query = null;
+            
+
+            let posts;
+            let query;
+            let sort;
 
             if (limit && skip) {
                 const options = {
@@ -28,25 +32,28 @@ class PostController {
                     sort: { created_at: -1 },
                 };
                 posts = await Post.paginate({}, options);
-            } 
-            
-            if (search){
-                query = {
-                    title: {
-                        $regex: search,
-                        $options: 'i'
+            }  else {
+                
+                if (search) {
+                    query = {
+                        title: {
+                            $regex: search,
+                            $options: 'i'
+                        }
                     }
                 }
+           
+                sort = req.query.sort || { created_at: -1 }; 
+    
+                posts = await Post.find(query)
+                    .populate('category', 'name')
+                    .populate('user', 'avatar name address')
+                    .populate('type', 'name')
+                    .populate('tags', 'name')
+                    .populate('media')
+                    .sort(sort).exec();
             }
             
-            posts = await Post.find(query)
-                .populate('category')
-                .populate('user', 'avatar name address')
-                .populate('type', 'name')
-                .populate('tags', 'name')
-                .populate('media')
-                .sort({ created_at: -1 }).exec();
-
             if (posts === undefined || posts === null) {
                 throw new APIError(404, 'Collection for posts not found!');
             }

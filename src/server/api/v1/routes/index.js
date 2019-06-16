@@ -6,13 +6,11 @@ import express from 'express';
 
 /*
 Import the internal libraries:
-- blog.routes.js
 - category.routes.js
 - post.routes.js
 */
 import AuthService from '../service';
 import authRouter from './auth.routes';
-import blogRouter from './blog.routes';
 import categoryRouter from './category.routes';
 import conversationRouter from './conversation.routes';
 import postRouter from './post.routes';
@@ -30,11 +28,10 @@ const authService = new AuthService();
 const apiV1Router = express.Router();
 
 authRouter(apiV1Router, authService);
-blogRouter(apiV1Router, authService);
 categoryRouter(apiV1Router, authService);
 conversationRouter(apiV1Router, authService);
 postRouter(apiV1Router, authService);
-userRouter(apiV1Router, authService);
+userRouter(apiV1Router);
 tagRouter(apiV1Router, authService);
 messageRouter(apiV1Router, authService);
 commentRouter(apiV1Router, authService);
