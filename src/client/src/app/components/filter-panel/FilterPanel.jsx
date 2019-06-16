@@ -100,6 +100,14 @@ class FilterPanel extends Component {
                             ))}
                         </SelectInput>
                     </ListItem>
+                    <ListItem>
+                        <SelectInput id="selectedSorting">
+                            <option value=''>Sort by</option>
+                            <option value=''>Date</option>
+                            <option value=''>Price</option>
+                            <option value=''>Distance</option>
+                        </SelectInput>
+                    </ListItem>
                 </List>
             </Drawer>
         )
